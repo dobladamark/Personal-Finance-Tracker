@@ -25,7 +25,7 @@ body {
 .navbar {
     background-color: var(--headline);
     padding: 0 30px;
-    height: 120px;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,7 +51,7 @@ body {
 
 .nav-item {
     margin: 0 15px;
-    font-size: 23px;
+    font-size: 19px;
 
 }
 
@@ -62,5 +62,5 @@ body {
 
 
 .logo {
-   width: 110px;
+   width: 100px;
 }
