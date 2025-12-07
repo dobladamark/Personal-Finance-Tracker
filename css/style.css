@@ -24,13 +24,19 @@ body {
 
 .navbar {
     background-color: var(--headline);
-    padding: 30px 0;
-    height: 80px  
+    padding: 0 30px;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    
+    
 }
 
 .nav-list {
     display: flex;
-    justify-content: center;
+   
     list-style-type: none;
     gap: 50px;
     font-size: 18px;
@@ -45,9 +51,16 @@ body {
 
 .nav-item {
     margin: 0 15px;
+    font-size: 23px;
+
 }
 
 .nav-item:hover a {
     color: var(--highlight);
     transition: color 0.3s ease;
+}
+
+
+.logo {
+   width: 110px;
 }
