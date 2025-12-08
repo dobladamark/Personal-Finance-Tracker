@@ -4,24 +4,18 @@
     box-sizing: border-box;
 }
 
-
 :root {
     --background: lch(100% 0.01 296.81);
     --button: #AAF0D1;
-    --stroke: #2C3E50;
     --headline: #2C3E50;
-    --button-text: #2C3E50;
-    --main: #2C3E50;
-    --paragraph: #172c66;
     --highlight: #fef6e4;
-
 }
 
 body {
     font-family: 'Roboto', sans-serif;
 }
 
-
+/*NAVIGATION BAR*/
 .navbar {
     background-color: var(--headline);
     padding: 0 30px;    
@@ -29,16 +23,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    
-    
 }
 
 .nav-list {
     display: flex;
-   
     list-style-type: none;
-    gap: 50px;
+    gap: 70px;
     font-size: 18px;
 }
 
@@ -46,13 +36,6 @@ body {
     text-decoration: none;
     color: var(--button);
     font-weight: 500;
-    margin: 0 5px;
-}
-
-.nav-item {
-    margin: 0 15px;
-    font-size: 18px;
-
 }
 
 .nav-item:hover a {
@@ -60,11 +43,11 @@ body {
     transition: color 0.3s ease;
 }
 
-
 .logo {
    width: 100px;
 }
 
+/*DASHBOARD SECTION*/
 .dashboard {
     background-color: var(--background);
     display: flex;
@@ -74,55 +57,89 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     flex-direction: column;
     gap: 20px;
-    
-    height:  86.3vh;
-    
+    min-height: calc(100vh - 100px);
 }
 
-.summary-cards {
+.dash-summary-cards {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   gap: 20px;
-  ;
 }
 
-.card {
-    
-  border: 1px solid #ccc; 
-  padding: 30px;
-  width: 300px;
+.dash-card {
+  border: 1px solid #e5e7eb; 
+  padding: 24px;
+  width: 350px;
   height: 150px; 
-  text-align: center;
-  background-color: #f9f9f9; 
+  background-color: white; 
   border-radius: 10px;
-  
+  display: flex;
+  align-items: center; 
+  gap: 15px; 
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.card h3 {
-  margin-bottom: 10px;
+.dash-icon-cards {
+  font-size: 30px;
+  border-radius: 50%;
+  border: 2px solid #F5F5F5;
+  background-color: #F5F5F5;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;  
+}
+
+.dash-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;  
+}
+
+.dash-card h3 {
   font-size: 13px;
-  color: gray;
+  color: #6b7280;
+  font-weight: 400;
+  margin: 0;
 }
 
-.card p {
+.dash-card p {
   font-size: 35px;
   font-weight: bold;
-  
+  margin: 0;
+  line-height: 1;
 }
 
-
-.card p, h3 {
-   margin: 0 70px 0 0;
+.dash-card-footer {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 400;
 }
 
-#incomeText {
+#dash-income-money {
     color: rgb(73, 174, 73);
 }
 
-#expensesText {
-    color: rgba(183, 11, 11, 0.786);
+#dash-expenses-money {
+    color: rgba(225, 33, 33, 0.812);
 }
-#savingsText {
+
+#dash-savings-money {
     color: rgb(60, 103, 176);
 }
+
+#dash-budget-used {
+    color: rgb(205, 13, 13);
+}
+
+
+
+
+/*MEDIA QUERIES*/
+
+.dash-card {
+    width: 100%;
+    padding: 20px;
+  }
+

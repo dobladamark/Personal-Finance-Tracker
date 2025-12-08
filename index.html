@@ -7,39 +7,60 @@
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
 </head>
 <body>
+  <!-- Navigation Bar -->
     <header>
       <nav class="navbar">
-
-        <a href="#"><img src="assets/logo.png" class="logo"alt="logo"></a>
+        <a href="#"><img src="assets/logo.png" class="logo" alt="logo"></a>
         <ul class="nav-list">
             <li class="nav-item"><a href="#">Dashboard</a></li>
             <li class="nav-item"><a href="#">Budget</a></li>
             <li class="nav-item"><a href="#">Expenses</a></li>
             <li class="nav-item"><a href="#">Reports</a></li>
-            
         </ul>
       </nav>
     </header>
-
-  <section class="dashboard">
-     <div class="summary-cards">
-        <div class="card">
-    <h3>Total Income</h3>
-    <p id="incomeText">₱20,000</p>
-      </div>
-  <div class="card">
-    <h3>Total Expenses</h3>
-    <p id="expensesText">₱15,000</p>
-  </div>
-  <div class="card">
-    <h3>Net Savings</h3>
-    <p id="savingsText">₱5,000</p>
-  </div>
-   </div>
-
-  </section>
+   
+  <!-- Dashboard Section -->
+    <section class="dashboard">
+     <div class="dash-summary-cards">      
+        <div class="dash-card">
+            <span class="dash-icon-cards">💵</span>
+            <div class="dash-card-content">
+                <h3>Total Income</h3>
+                <p id="dash-income-money">₱20,000</p>
+                <span class="dash-card-footer">This month</span>
+            </div>
+        </div>
+        
+        <div class="dash-card">
+            <span class="dash-icon-cards">💸</span>
+            <div class="dash-card-content">
+                <h3>Total Expenses</h3>
+                <p id="dash-expenses-money">₱15,000</p>
+                <span class="dash-card-footer">This month</span>
+            </div>
+        </div>
+        
+        <div class="dash-card">
+            <span class="dash-icon-cards">💰</span>
+            <div class="dash-card-content">
+                <h3>Net Savings</h3>
+                <p id="dash-savings-money">₱5,000</p>
+                <span class="dash-card-footer">Available</span>
+            </div>
+        </div>
+        
+        <div class="dash-card">
+            <span class="dash-icon-cards">📊</span>
+            <div class="dash-card-content">
+                <h3>Budget Used</h3>
+                <p id="dash-budget-used">78%</p>
+                <span class="dash-card-footer">Of ₱20,000</span>
+            </div>
+        </div>
+     </div>
+    </section>
 </body>
 </html>
