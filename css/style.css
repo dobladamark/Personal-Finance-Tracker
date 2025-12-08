@@ -133,6 +133,76 @@ body {
     color: rgb(205, 13, 13);
 }
 
+/*CHARTS*/
+
+.dash-charts {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.chart-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  max-width: 700px;
+  margin: 20px 0;
+  flex: 1 1 45%; 
+  min-width: 300px; 
+}
+.chart-card h2 {
+    color: #2C3E50;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+
+
+
+/* DONUT SECTION */
+
+.donut-container {
+    display: flex;
+    align-items: center; 
+    gap: 10px;        
+    justify-content: center;
+}
+
+.donut-wrapper {
+    width: 260px;
+    height: 260px;
+    margin: 0 40px;
+}
+
+.donut-legend {
+    margin-top: 15px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.donut-legend li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.legend-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.legend-box.food { background-color: #4B6EF5; }
+.legend-box.transport { background-color: #F25C54; }
+.legend-box.shopping { background-color: #F2C94C; }
+.legend-box.others { background-color: #E0E0E0; }
+
 
 
 
