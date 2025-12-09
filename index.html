@@ -1,100 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Finance Tracker</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-</head>
-<body>
-  <!-- Navigation Bar -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
     <header>
       <nav class="navbar">
-        <a href="#"><img src="assets/logo.png" class="logo" alt="logo"></a>
+        <a href="#"><img src="assets/logo.png" class="logo" alt="logo" /></a>
         <ul class="nav-list">
-            <li class="nav-item"><a href="#">Dashboard</a></li>
-            <li class="nav-item"><a href="#">Budget</a></li>
-            <li class="nav-item"><a href="#">Expenses</a></li>
-            <li class="nav-item"><a href="#">Reports</a></li>
+          <li class="nav-item"><a href="#">Dashboard</a></li>
+          <li class="nav-item"><a href="#">Budget</a></li>
+          <li class="nav-item"><a href="#">Expenses</a></li>
+          <li class="nav-item"><a href="#">Reports</a></li>
         </ul>
       </nav>
     </header>
-   
-  <!-- Dashboard Section -->
+
+    <!-- Dashboard Section -->
     <section class="dashboard">
-     <div class="dash-summary-cards">      
+      <div class="dash-summary-cards">
         <div class="dash-card">
-            <span class="dash-icon-cards">💵</span>
-            <div class="dash-card-content">
-                <h3>Total Income</h3>
-                <p id="dash-income-money">₱20,000</p>
-                <span class="dash-card-footer">This month</span>
-            </div>
+          <span class="dash-icon-cards">💵</span>
+          <div class="dash-card-content">
+            <h3>Total Income</h3>
+            <p id="dash-income-money">₱20,000</p>
+            <span class="dash-card-footer">This month</span>
+          </div>
         </div>
-        
+
         <div class="dash-card">
-            <span class="dash-icon-cards">💸</span>
-            <div class="dash-card-content">
-                <h3>Total Expenses</h3>
-                <p id="dash-expenses-money">₱15,000</p>
-                <span class="dash-card-footer">This month</span>
-            </div>
+          <span class="dash-icon-cards">💸</span>
+          <div class="dash-card-content">
+            <h3>Total Expenses</h3>
+            <p id="dash-expenses-money">₱15,000</p>
+            <span class="dash-card-footer">This month</span>
+          </div>
         </div>
-        
+
         <div class="dash-card">
-            <span class="dash-icon-cards">💰</span>
-            <div class="dash-card-content">
-                <h3>Net Savings</h3>
-                <p id="dash-savings-money">₱5,000</p>
-                <span class="dash-card-footer">Available</span>
-            </div>
+          <span class="dash-icon-cards">💰</span>
+          <div class="dash-card-content">
+            <h3>Net Savings</h3>
+            <p id="dash-savings-money">₱5,000</p>
+            <span class="dash-card-footer">Available</span>
+          </div>
         </div>
-        
+
         <div class="dash-card">
-            <span class="dash-icon-cards">📊</span>
-            <div class="dash-card-content">
-                <h3>Budget Used</h3>
-                <p id="dash-budget-used">78%</p>
-                <span class="dash-card-footer">Of ₱20,000</span>
+          <span class="dash-icon-cards">🎯</span>
+          <div class="dash-card-content">
+            <h3>Budget Used</h3>
+            <p id="dash-budget-used">78%</p>
+            <span class="dash-card-footer">Of ₱20,000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHART SECTION -->
+      <div class="dash-charts">
+        <!-- LINE CHART -->
+        <div class="chart-card">
+          <h2>Spending Trends</h2>
+          <canvas id="spendingChart"></canvas>
+        </div>
+
+        <!-- DONUT CHART -->
+        <div class="chart-card donut-card">
+          <h2>Category Breakdown</h2>
+
+          <div class="donut-container">
+            <div class="donut-wrapper">
+              <canvas id="categoryChart"></canvas>
             </div>
+
+            <ul class="donut-legend">
+              <li><span class="legend-box food"></span> Food - ₱1,240 (30%)</li>
+              <li>
+                <span class="legend-box transport"></span> Transport - ₱820
+                (25%)
+              </li>
+              <li>
+                <span class="legend-box shopping"></span> Shopping - ₱615 (19%)
+              </li>
+              <li>
+                <span class="legend-box others"></span> Others - ₱605 (10%)
+              </li>
+            </ul>
+          </div>
         </div>
-     </div>
+      </div>
 
-    <!-- CHART SECTION -->
-<div class="dash-charts">
-
-  <!-- LINE CHART -->
-  <div class="chart-card">
-      <h2>Spending Trends</h2>
-      <canvas id="spendingChart"></canvas>
-  </div>
-
-  <!-- DONUT CHART -->
-  <div class="chart-card donut-card">
-    <h2>Category Breakdown</h2>
-
-    <div class="donut-container">
-        <div class="donut-wrapper">
-            <canvas id="categoryChart"></canvas>
-        </div>
-
-        <ul class="donut-legend">
-            <li><span class="legend-box food"></span> Food - ₱1,240 (30%)</li>
-            <li><span class="legend-box transport"></span> Transport - ₱820 (25%)</li>
-            <li><span class="legend-box shopping"></span> Shopping - ₱615 (19%)</li>
-            <li><span class="legend-box others"></span> Others - ₱605 (10%)</li>
+      <!-- RECENT TRANSACTIONS -->
+      <div class="recent-transactions">
+        <h2>Recent Transactions</h2>
+        <ul>
+          <li class="transaction-item">
+            <span class="transaction-icon">🍕</span>
+            <div class="transaction-details">
+              <strong>Pizza Restaurant</strong>
+              <p>Food & Dining - Dec 6</p>
+            </div>
+            <span class="transaction-amount negative">-₱42.50</span>
+          </li>
+          <li class="transaction-item">
+            <span class="transaction-icon">🚗</span>
+            <div class="transaction-details">
+              <strong>Uber Ride</strong>
+              <p>Transport - Dec 5</p>
+            </div>
+            <span class="transaction-amount negative">-₱18.00</span>
+          </li>
+          <li class="transaction-item">
+            <span class="transaction-icon">💼</span>
+            <div class="transaction-details">
+              <strong>Salary Deposit</strong>
+              <p>Income - Dec 1</p>
+            </div>
+            <span class="transaction-amount positive">+₱5,450.00</span>
+          </li>
         </ul>
-    </div>
-</div>
-
-
-</div>
-
+      </div>
     </section>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="js/chart.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/chart.js"></script>
+  </body>
 </html>

@@ -1,63 +1,63 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --background: lch(100% 0.01 296.81);
-    --button: #AAF0D1;
-    --headline: #2C3E50;
-    --highlight: #fef6e4;
+  --background: lch(100% 0.01 296.81);
+  --button: #aaf0d1;
+  --headline: #2c3e50;
+  --highlight: #fef6e4;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /*NAVIGATION BAR*/
 .navbar {
-    background-color: var(--headline);
-    padding: 0 30px;    
-    height: 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: var(--headline);
+  padding: 0 30px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-list {
-    display: flex;
-    list-style-type: none;
-    gap: 70px;
-    font-size: 18px;
+  display: flex;
+  list-style-type: none;
+  gap: 70px;
+  font-size: 18px;
 }
 
 .nav-item a {
-    text-decoration: none;
-    color: var(--button);
-    font-weight: 500;
+  text-decoration: none;
+  color: var(--button);
+  font-weight: 500;
 }
 
 .nav-item:hover a {
-    color: var(--highlight);
-    transition: color 0.3s ease;
+  color: var(--highlight);
+  transition: color 0.3s ease;
 }
 
 .logo {
-   width: 100px;
+  width: 100px;
 }
 
 /*DASHBOARD SECTION*/
 .dashboard {
-    background-color: var(--background);
-    display: flex;
-    padding: 50px;
-    margin: 0 auto;
-    max-width: 1600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    flex-direction: column;
-    gap: 20px;
-    min-height: calc(100vh - 100px);
+  background-color: var(--background);
+  display: flex;
+  padding: 50px;
+  margin: 0 auto;
+  max-width: 1600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - 100px);
 }
 
 .dash-summary-cards {
@@ -66,35 +66,35 @@ body {
 }
 
 .dash-card {
-  border: 1px solid #e5e7eb; 
+  border: 1px solid #e5e7eb;
   padding: 24px;
   width: 350px;
-  height: 150px; 
-  background-color: white; 
+  height: 150px;
+  background-color: white;
   border-radius: 10px;
   display: flex;
-  align-items: center; 
-  gap: 15px; 
+  align-items: center;
+  gap: 15px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .dash-icon-cards {
   font-size: 30px;
   border-radius: 50%;
-  border: 2px solid #F5F5F5;
-  background-color: #F5F5F5;
+  border: 2px solid #f5f5f5;
+  background-color: #f5f5f5;
   width: 45px;
   height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;  
+  flex-shrink: 0;
 }
 
 .dash-card-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;  
+  gap: 8px;
 }
 
 .dash-card h3 {
@@ -118,98 +118,158 @@ body {
 }
 
 #dash-income-money {
-    color: rgb(73, 174, 73);
+  color: rgb(73, 174, 73);
 }
 
 #dash-expenses-money {
-    color: rgba(225, 33, 33, 0.812);
+  color: rgba(225, 33, 33, 0.812);
 }
 
 #dash-savings-money {
-    color: rgb(60, 103, 176);
+  color: rgb(60, 103, 176);
 }
 
 #dash-budget-used {
-    color: rgb(205, 13, 13);
+  color: rgb(205, 13, 13);
 }
 
 /*CHARTS*/
 
 .dash-charts {
-    display: flex;
-    gap: 30px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .chart-card {
   background: white;
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   max-width: 700px;
   margin: 20px 0;
-  flex: 1 1 45%; 
-  min-width: 300px; 
+  flex: 1 1 45%;
+  min-width: 300px;
 }
 .chart-card h2 {
-    color: #2C3E50;
-    margin-bottom: 10px;
-    font-size: 20px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
-
-
-
 
 /* DONUT SECTION */
 
 .donut-container {
-    display: flex;
-    align-items: center; 
-    gap: 10px;        
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
 }
 
 .donut-wrapper {
-    width: 260px;
-    height: 260px;
-    margin: 0 40px;
+  width: 260px;
+  height: 260px;
+  margin: 0 40px;
 }
 
 .donut-legend {
-    margin-top: 15px;
-    list-style: none;
-    padding-left: 0;
+  margin-top: 15px;
+  list-style: none;
+  padding-left: 0;
 }
 
 .donut-legend li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-    font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .legend-box {
-    width: 14px;
-    height: 14px;
-    border-radius: 4px;
-    display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: inline-block;
 }
 
-.legend-box.food { background-color: #4B6EF5; }
-.legend-box.transport { background-color: #F25C54; }
-.legend-box.shopping { background-color: #F2C94C; }
-.legend-box.others { background-color: #E0E0E0; }
+.legend-box.food {
+  background-color: #4b6ef5;
+}
+.legend-box.transport {
+  background-color: #f25c54;
+}
+.legend-box.shopping {
+  background-color: #f2c94c;
+}
+.legend-box.others {
+  background-color: #e0e0e0;
+}
 
 
+/*RECENT TRANSACTIONS*/
+.recent-transactions {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  color: #2c3e50;
+}
 
+.recent-transactions h2 {
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.recent-transactions ul {
+  list-style: none;
+  padding: 0;
+
+}
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e0e0e0;
+  
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.transation-details {
+  flex-grow: 1;
+  
+}
+
+.transaction-amount {
+  font-weight: bold;
+  margin-left: auto;
+}
+
+.transaction-amount.positive {
+  color: green;
+}
+
+.transaction-amount.negative {
+  color: red;
+}
 
 /*MEDIA QUERIES*/
 
 .dash-card {
-    width: 100%;
-    padding: 20px;
-  }
-
+  width: 100%;
+  padding: 20px;
+}
