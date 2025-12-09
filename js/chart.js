@@ -4,11 +4,11 @@ const ctx = document.getElementById("spendingChart");
 new Chart(ctx, {
   type: "line",
   data: {
-    labels: ["January", "February", "March", "April"],
+    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     datasets: [
       {
         label: "Spending",
-        data: [300, 500, 350, 600],
+        data: [10000, 11500, 12500, 13400, 13500, 20000, 11000, 14000, 12500, 20000, 13000, 15000],
         borderWidth: 3,
         borderColor: "#6C8CFF",
         backgroundColor: "rgba(108,140,255,0.3)",
@@ -51,7 +51,7 @@ new Chart(categoryCtx, {
     labels: ["Food", "Transport", "Shopping", "Others"],
     datasets: [
       {
-        data: [1240, 820, 615, 605],
+        data: [6040, 2000, 4000, 2960],
         backgroundColor: ["#4B6EF5", "#F25C54", "#F2C94C", "#E0E0E0"],
         borderWidth: 0,
         cutout: "80%",
