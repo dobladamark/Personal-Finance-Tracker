@@ -47,6 +47,17 @@ body {
   width: 100px;
 }
 
+.logo-text {
+  color: var(--button);
+  text-decoration: none;
+  font-family: "Raleway", sans-serif;
+  font-size: 23px;
+  font-weight: 550;
+  display: flex;
+  margin-right: auto;
+  margin-left: 15px;
+}
+
 /*DASHBOARD SECTION*/
 .dashboard {
   background-color: var(--background);
@@ -386,6 +397,97 @@ body {
 
 .amount.negative {
   color: red;
+}
+
+/*BUDGET SECTION*/
+.budget-container {
+  background-color: var(--background);
+  display: flex;
+  padding: 50px;
+  margin: 0 auto;
+  max-width: 1600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - 100px);
+}
+
+.budget-summary-card h2 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.budg-summary-cards {
+  display: flex;
+  gap: 80px;
+}
+
+.budg-card {
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  width: 280px;
+  height: 100px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.budg-icon-cards {
+  font-size: 30px;
+  border-radius: 50%;
+  border: 2px solid #f5f5f5;
+  background-color: #f5f5f5;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.budg-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.budg-card h3 {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 400;
+  margin: 0;
+}
+
+.budg-card p {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1;
+}
+
+.budg-card-footer {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+#budg-income-money {
+  color: #3b4454;
+}
+
+#budg-expenses-money {
+  color: rgba(225, 33, 33, 0.812);
+}
+
+#budg-savings-money {
+  color: rgb(11, 173, 28);
+}
+
+#budg-budget-used {
+  color: rgb(205, 13, 13);
 }
 
 /*MEDIA QUERIES*/
