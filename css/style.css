@@ -65,10 +65,10 @@ body {
   padding: 50px;
   margin: 0 auto;
   max-width: 1600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex-direction: column;
   gap: 20px;
   min-height: calc(100vh - 100px);
+  
 }
 
 .dash-summary-cards {
@@ -400,19 +400,25 @@ body {
 }
 
 /*BUDGET SECTION*/
-.budget-container {
+.budget-section {
   background-color: var(--background);
   display: flex;
   padding: 50px;
   margin: 0 auto;
   max-width: 1600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex-direction: column;
   gap: 20px;
   min-height: calc(100vh - 100px);
 }
 
-.budget-summary-card h2 {
+.budget-summary-card-container {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 30px 50px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.budget-summary-card-container h2 {
   margin-bottom: 15px;
   color: #2c3e50;
   font-size: 20px;
@@ -424,7 +430,6 @@ body {
 }
 
 .budg-card {
-  border: 1px solid #e5e7eb;
   padding: 24px;
   width: 280px;
   height: 100px;
@@ -433,7 +438,7 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
 }
 
 .budg-icon-cards {
@@ -513,8 +518,8 @@ body {
 
 .budg-percentage-item {
   background-color: white;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  
+  
   padding: 20px 20px;
   margin-bottom: 20px;
   display: flex;
