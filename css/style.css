@@ -624,6 +624,20 @@ body {
   transition: width 0.3s ease;
 }
 
+/*REPORTS SECTION*/
+
+.report-container {
+  background-color: var(--background);
+  display: flex;
+  padding: 50px;
+  margin: 0 auto;
+  max-width: 1600px;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - 100px);
+}
+
+
 /*MEDIA QUERIES*/
 
 .dash-card {
