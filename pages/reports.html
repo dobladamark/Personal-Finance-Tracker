@@ -22,7 +22,32 @@
       </nav>
     </header>
     <section class="report-container">
-      
+      <div class="generate-report">
+        <h4>Generate Report</h4>
+        <div class="filter-bar">
+          <div class="filter-pill">
+            <span class="filter-icon">📅</span>
+            <select>
+              <option>Select Period</option>
+              <option>This Month</option>
+              <option>Last Month</option>
+              <option>This Year</option>
+            </select>
+          </div>
+          <div class="filter-pill">
+            <span class="filter-icon">🏷️</span>
+            <select>
+              <option>Category: All</option>
+              <option>Food</option>
+              <option>Transport</option>
+              <option>Utilities</option>
+            </select>
+          </div>
+
+          <button type="button" class="generate-btn"><span class="generate-icon">📊</span>Generate</button>
+          <button type="button" class="export-btn"><span class="export-icon">📥</span>Export CSV</button>
+        </div>
+      </div>
     </section>
   </body>
 </html>
