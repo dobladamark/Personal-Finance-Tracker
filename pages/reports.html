@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reports | Personal Finance Tracker</title>
-    <link rel="icon" type="image/x-icon" href="../assets/logo.png">
+    <link rel="icon" type="image/x-icon" href="../assets/logo.png" />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
@@ -45,14 +45,52 @@
             </select>
           </div>
 
-          <button type="button" class="generate-btn"><span class="generate-icon">📊</span>Generate</button>
-          <button type="button" class="export-btn"><span class="export-icon">📥</span>Export CSV</button>
+          <button type="button" class="generate-btn">
+            <span class="generate-icon">📊</span>Generate
+          </button>
+          <button type="button" class="export-btn">
+            <span class="export-icon">📥</span>Export CSV
+          </button>
         </div>
       </div>
 
-      <div class="comparison-container">
-        
+      <div class="rep-comparison-container">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Monthly Spending Comparison</h3>
+            <span class="chart-subtitle">Year 2025</span>
+          </div>
+
+          <canvas id="monthlySpendingChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Income vs Expenses</h3>
+            <span class="chart-subtitle">December 2025</span>
+          </div>
+
+          <div class="summary-box income">
+            <p>Total Income</p>
+            <h2>$5,450</h2>
+          </div>
+
+          <div class="summary-box expense">
+            <p>Total Expenses</p>
+            <h2>$3,280</h2>
+          </div>
+
+          <div class="summary-box savings">
+            <p>Net Savings</p>
+            <h2>$2,170</h2>
+          </div>
+
+          <div class="savings-rate">
+            🎯 Savings Rate: <strong>39.8%</strong>
+          </div>
+        </div>
       </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/reports.js"></script>
   </body>
 </html>
