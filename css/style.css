@@ -718,10 +718,7 @@ body {
   
 }
 
-.chart-card canvas {
-  width: 100% !important;
-  height: 340px !important;
-}
+
 
 .chart-header {
   margin-bottom: 15px;
