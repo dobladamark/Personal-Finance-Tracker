@@ -7,8 +7,7 @@
     <link rel="icon" type="image/x-icon" href="../assets/logo.png" />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-    <body data-page="reports" data-path-prefix="../">
-   
+  <body data-page="reports" data-path-prefix="../">
     <section class="report-container">
       <div class="generate-report">
         <h4>Generate Report</h4>
@@ -77,42 +76,38 @@
         </div>
       </div>
 
-      <div class="finance-summary-card-container">
-        <h2>Financial Summary</h2>
-        <div class="finance-summary-cards">
-          <div class="finance-card card-blue">
-            <div class="finance-card-content">
-              <h3>Average Daily Spending</h3>
-              <p id="finance-income-money">₱500</p>
-              <span class="dash-card-footer">Based on 30 days</span>
-            </div>
+      <div class="card-grid card-grid--4">
+        <div class="card card--summary card--blue">
+          <div class="card__content">
+            <h3 class="card__title">Average Daily Spending</h3>
+            <p class="card__value">₱500</p>
+            <span class="card__footer">Based on 30 days</span>
           </div>
+        </div>
 
-          <div class="finance-card card-yellow">
-            <span class="finance-icon-cards">🍔</span>
-            <div class="finance-card-content">
-              <h3>Highest Category</h3>
-              <p id="finance-expenses-money">Food</p>
-              <span class="dash-card-footer">₱6,040 (78% of Total)</span>
-            </div>
+        <div class="card card--summary card--yellow">
+          <span class="card__icon">🍔</span>
+          <div class="card__content">
+            <h3 class="card__title">Highest Category</h3>
+            <p class="card__value">Food</p>
+            <span class="card__footer">₱6,040 (78% of Total)</span>
           </div>
+        </div>
 
-          <div class="finance-card card-purple">
-            <div class="finance-card-content">
-              <h3>Total Transactions</h3>
-              <p id="finance-savings-money">47</p>
-              <span class="dash-card-footer">This month</span>
-            </div>
+        <div class="card card--summary card--purple">
+          <div class="card__content">
+            <h3 class="card__title">Total Transactions</h3>
+            <p class="card__value">47</p>
+            <span class="card__footer">This month</span>
           </div>
+        </div>
 
-          <div class="finance-card card-green">
-            <div class="finance-card-content">
-              <h3>Budget Performance</h3>
-              <p id="finance-budget-used">✓ Good</p>
-              <span class="dash-card-footer">On track with goals</span>
-            </div>
+        <div class="card card--summary card--green">
+          <div class="card__content">
+            <h3 class="card__title">Budget Performance</h3>
+            <p class="card__value">✓ Good</p>
+            <span class="card__footer">On track with goals</span>
           </div>
-         
         </div>
       </div>
     </section>

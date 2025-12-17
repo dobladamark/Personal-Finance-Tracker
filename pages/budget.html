@@ -7,46 +7,59 @@
     <link rel="icon" type="image/x-icon" href="../assets/logo.png" />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-    <body data-page="budget" data-path-prefix="../">
-   
-
+  <body data-page="budget" data-path-prefix="../">
     <section class="budget-section">
-      <div class="budget-summary-card-container">
-        <h2>December 2025 Budget Overview</h2>
-        <div class="budg-summary-cards">
-          <div class="budg-card">
-            <span class="budg-icon-cards">💰</span>
-            <div class="budg-card-content">
-              <h3>Total Budget</h3>
-              <p id="budg-income-money">₱20,000</p>
-            </div>
+      <h2>December 2025 Budget Overview</h2>
+      <div class="card-grid card-grid--4">
+        <div class="card card--summary">
+          <span class="card__icon">💰</span>
+          <div class="card__content">
+            <h3 class="card__title">Total Budget</h3>
+            <p class="card__value card__value--info" data-field="totalBudget">
+              ₱0
+            </p>
           </div>
-
-          <div class="budg-card">
-            <span class="budg-icon-cards">💸</span>
-            <div class="budg-card-content">
-              <h3>Spent</h3>
-              <p id="budg-expenses-money">₱15,000</p>
-            </div>
-          </div>
-
-          <div class="budg-card">
-            <span class="budg-icon-cards">💵</span>
-            <div class="budg-card-content">
-              <h3>Remaining</h3>
-              <p id="budg-savings-money">₱5,000</p>
-            </div>
-          </div>
-
-          <div class="budg-card">
-            <span class="budg-icon-cards">📊</span>
-            <div class="budg-card-content">
-              <h3>Percentage</h3>
-              <p id="budg-budget-used">78%</p>
-            </div>
-          </div>
-          <button type="button" class="set-budget-btn">+ Set Budget</button>
         </div>
+
+        <div class="card card--summary">
+          <span class="card__icon">💸</span>
+          <div class="card__content">
+            <h3 class="card__title">Spent</h3>
+            <p
+              class="card__value card__value--expense"
+              data-field="totalExpenses"
+            >
+              ₱0
+            </p>
+          </div>
+        </div>
+
+        <div class="card card--summary">
+          <span class="card__icon">💵</span>
+          <div class="card__content">
+            <h3 class="card__title">Remaining</h3>
+            <p
+              class="card__value card__value--success"
+              data-field="budgetRemaining"
+            >
+              ₱0
+            </p>
+          </div>
+        </div>
+
+        <div class="card card--summary">
+          <span class="card__icon">📊</span>
+          <div class="card__content">
+            <h3 class="card__title">Percentage</h3>
+            <p
+              class="card__value card__value--warning"
+              data-field="budgetUsedPercentage"
+            >
+              0%
+            </p>
+          </div>
+        </div>
+        <button type="button" class="set-budget-btn">+ Set Budget</button>
       </div>
 
       <div class="budget-category">

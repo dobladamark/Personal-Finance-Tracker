@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Finance Tracker</title>
-    <link rel="icon" type="image/x-icon" href="assets/logo.png">
+    <link rel="icon" type="image/x-icon" href="assets/logo.png" />
     <link rel="stylesheet" href="../css/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
@@ -16,45 +16,55 @@
     />
   </head>
   <body data-page="dashboard" data-path-prefix="">
-
-
-
-
     <section class="dashboard">
-      <div class="dash-summary-cards">
-        <div class="dash-card">
-          <span class="dash-icon-cards">💵</span>
-          <div class="dash-card-content">
-            <h3>Total Income</h3>
-            <p id="dash-income-money">₱20,000</p>
-            <span class="dash-card-footer">This month</span>
+      <div class="card-grid card-grid--4">
+        <div class="card card--summary">
+          <span class="card__icon">💵</span>
+          <div class="card__content">
+            <h3 class="card__title">Total Income</h3>
+            <p class="card__value card__value--income" data-field="totalIncome">
+              ₱0
+            </p>
+            <span class="card__footer">This month</span>
           </div>
         </div>
 
-        <div class="dash-card">
-          <span class="dash-icon-cards">💸</span>
-          <div class="dash-card-content">
-            <h3>Total Expenses</h3>
-            <p id="dash-expenses-money">₱15,000</p>
-            <span class="dash-card-footer">This month</span>
+        <div class="card card--summary">
+          <span class="card__icon">💸</span>
+          <div class="card__content">
+            <h3 class="card__title">Total Expenses</h3>
+            <p
+              class="card__value card__value--expense"
+              data-field="totalExpenses"
+            >
+              ₱0
+            </p>
+            <span class="card__footer">This month</span>
           </div>
         </div>
 
-        <div class="dash-card">
-          <span class="dash-icon-cards">💰</span>
-          <div class="dash-card-content">
-            <h3>Balance</h3>
-            <p id="dash-savings-money">₱5,000</p>
-            <span class="dash-card-footer">Available</span>
+        <div class="card card--summary">
+          <span class="card__icon">💰</span>
+          <div class="card__content">
+            <h3 class="card__title">Balance</h3>
+            <p class="card__value card__value--balance" data-field="balance">
+              ₱0
+            </p>
+            <span class="card__footer">Available</span>
           </div>
         </div>
 
-        <div class="dash-card">
-          <span class="dash-icon-cards">🎯</span>
-          <div class="dash-card-content">
-            <h3>Budget Used</h3>
-            <p id="dash-budget-used">78%</p>
-            <span class="dash-card-footer">Of ₱20,000</span>
+        <div class="card card--summary">
+          <span class="card__icon">🎯</span>
+          <div class="card__content">
+            <h3 class="card__title">Budget Used</h3>
+            <p
+              class="card__value card__value--warning"
+              data-field="budgetUsedPercentage"
+            >
+              0%
+            </p>
+            <span class="card__footer">Of ₱0</span>
           </div>
         </div>
       </div>
