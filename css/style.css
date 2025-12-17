@@ -837,6 +837,28 @@ body {
   
 }
 
+.card-blue {
+  background-color: #eef3ff;
+}
+
+.card-yellow {
+  background-color: #fff7e0;
+}
+
+.card-purple {
+  background-color: #f4e9f7;
+}
+
+.card-green {
+  background-color: #eaf7ea;
+}
+
+.card-blue p { color: #5b7cff; }
+.card-yellow p { color: #f59e0b; }
+.card-purple p { color: #a855f7; }
+.card-green p { color: #22c55e; }
+
+
 /*MEDIA QUERIES*/
 
 .dash-card {
