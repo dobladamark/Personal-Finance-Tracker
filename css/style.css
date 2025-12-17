@@ -43,6 +43,13 @@ body {
   transition: color 0.3s ease;
 }
 
+.nav-item.active a,
+.nav-item a.active {
+  color: var(--highlight);
+  border-bottom: 3px solid var(--highlight);
+  padding-bottom: 3px;
+}
+
 .logo {
   width: 100px;
 }

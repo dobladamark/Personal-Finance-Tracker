@@ -7,21 +7,8 @@
     <link rel="icon" type="image/x-icon" href="../assets/logo.png" />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <header>
-      <nav class="navbar">
-        <a href="#"><img src="../assets/logo.png" class="logo" alt="logo" /></a>
-        <a href="#" class="logo-text">FINANCE TRACKER</a>
-        <ul class="nav-list">
-          <li class="nav-item"><a href="../index.html">Dashboard</a></li>
-          <li class="nav-item"><a href="../pages/budget.html">Budget</a></li>
-          <li class="nav-item">
-            <a href="../pages/expenses.html">Expenses</a>
-          </li>
-          <li class="nav-item"><a href="../pages/reports.html">Reports</a></li>
-        </ul>
-      </nav>
-    </header>
+    <body data-page="budget" data-path-prefix="../">
+   
 
     <section class="budget-section">
       <div class="budget-summary-card-container">
@@ -81,5 +68,6 @@
         </div>
       </div>
     </section>
+    <script src="../js/navbar.js"></script>
   </body>
 </html>
