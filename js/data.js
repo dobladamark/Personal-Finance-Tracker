@@ -15,4 +15,26 @@ const FinanceDataStore = {
 
   // ALL TRANSSACTIONS
   transactions: [],
+
+  // CALCULATED DATAA
+  get balance() {
+    return this.totalIncome - this.totalExpenses;
+  },
+
+  get budgetRemaining() {
+    return this.totalBudget - this.totalExpenses;
+  },
+
+  get budgetUsedPercentage() {
+    if (this.totalBudget === 0) return 0;
+    return Math.round((this.totalExpenses / this.totalBudget) * 100);
+  },
+
+  get hasData() {
+    return (
+      this.totalIncome > 0 ||
+      this.totalExpenses > 0 ||
+      this.transactions.length > 0
+    );
+  },
 };
