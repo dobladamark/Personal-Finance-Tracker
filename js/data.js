@@ -37,4 +37,30 @@ const FinanceDataStore = {
       this.transactions.length > 0
     );
   },
+
+  // ADD TRANSACTION
+  addTransaction(transaction) {
+    if (!transaction.type || !transaction.amount || !transaction.description) {
+      console.error("❌ MISSING REQUIRED FIELDS", transaction);
+      return null;
+    }
+
+    transaction.id ||= Date.now() + Math.random();
+    transaction.createdAt = new Date().toISOString();
+
+    this.transactions.unshift(transaction);
+
+    if (transaction.type === "expense") {
+      this.totalExpenses += transaction.amount;
+      if (this.categories[transaction.category]) {
+        this.categories[transaction.category].spent += transaction.amount;
+      }
+    } else {
+      this.totalIncome += transaction.amount;
+    }
+
+    this.save();
+    console.log("✅ Transaction added");
+    return transaction;
+  },
 };
