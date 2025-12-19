@@ -156,4 +156,18 @@ const FinanceDataStore = {
       remaining: c.budget - c.spent
     }));
   },
+
+   getMonthlyExpenses() {
+    const monthlyData = {};
+    
+    this.transactions
+      .filter(t => t.type === 'expense')
+      .forEach(t => {
+        const date = new Date(t.date);
+        const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        monthlyData[monthKey] = (monthlyData[monthKey] || 0) + t.amount;
+      });
+    
+    return monthlyData;
+  },
 };
