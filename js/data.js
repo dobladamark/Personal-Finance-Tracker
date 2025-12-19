@@ -4,7 +4,7 @@ const FinanceDataStore = {
   totalExpenses: 0,
   totalBudget: 0,
 
-  // CATEEGORIES DATA
+  // CATEGORIES DATA
   categories: {
     food: { name: "Food & Dining", spent: 0, budget: 0, icon: "🍔" },
     transport: { name: "Transport", spent: 0, budget: 0, icon: "🚗" },
@@ -13,7 +13,7 @@ const FinanceDataStore = {
     others: { name: "Others", spent: 0, budget: 0, icon: "📦" },
   },
 
-  // ALL TRANSSACTIONS
+  // ALL TRANSACTIONS
   transactions: [],
 
   // CALCULATED DATAA
@@ -63,4 +63,17 @@ const FinanceDataStore = {
     console.log("✅ Transaction added");
     return transaction;
   },
-};
+
+  setBudget(category, amount) {
+    if (!this.categories[category] || amount < 0) return false;
+
+    this.categories[category].budget = amount;
+    this.totalBudget = Object.values(this.categories)
+      .reduce((sum, cat) => sum + cat.budget, 0);
+
+    this.save();
+    console.log(`✅ Budget set: ${category} = ₱${amount}`);
+    return true;
+  },
+  
+}
