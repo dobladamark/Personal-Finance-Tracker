@@ -99,4 +99,38 @@ const FinanceDataStore = {
     console.log("✅ Transaction deleted");
     return true;
   },
+
+  updateTransaction(transactionId, updates) {
+    const t = this.transactions.find((tx) => tx.id === transactionId);
+    if (!t) return false;
+
+    // REMOVE OLD AMOUNTS
+    if (t.type === "expense") {
+      this.totalExpenses -= t.amount;
+      if (this.categories[t.category]) {
+        this.categories[t.category].spent -= t.amount;
+      }
+    } else {
+      this.totalIncome -= t.amount;
+    }
+
+    // UPDATE TRANSACTION
+
+    Object.assign(t, updates);
+    t.updatedAt = new Date().toISOString();
+
+    // ADD NEW AMOUNTS
+    if (t.type === "expense") {
+      this.totalExpenses += t.amount;
+      if (this.categories[t.category]) {
+        this.categories[t.category].spent += t.amount;
+      }
+    } else {
+      this.totalIncome += t.amount;
+    }
+
+    this.save();
+    console.log("✅ Transaction updated");
+    return true;
+  },
 };
