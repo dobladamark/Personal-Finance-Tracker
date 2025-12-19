@@ -189,4 +189,32 @@ const FinanceDataStore = {
       return false;
     }
   },
+
+  // LOAD FROM LOCALSTORAGE
+  load() {
+    try {
+      const saved = localStorage.getItem("financeTrackerData");
+      if (!saved) {
+        console.log("ℹ️ NO SAVED DATA - STARTING FRESH");
+        return false;
+      }
+
+      const data = JSON.parse(saved);
+      this.totalIncome = data.totalIncome || 0;
+      this.totalExpenses = data.totalExpenses || 0;
+      this.totalBudget = data.totalBudget || 0;
+      this.categories = data.categories || this.categories;
+      this.transactions = data.transactions || [];
+
+      console.log("✅ DATA LOADED", {
+        income: this.totalIncome,
+        expenses: this.totalExpenses,
+        transactions: this.transactions.length,
+      });
+      return true;
+    } catch (error) {
+      console.error("❌ LOAD FAILED", error);
+      return false;
+    }
+  },
 };
