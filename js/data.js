@@ -133,4 +133,16 @@ const FinanceDataStore = {
     console.log("✅ Transaction updated");
     return true;
   },
+
+  getTransactionsByType(type) {
+    return this.transactions.filter((t) => t.type === type);
+  },
+
+  getTransactionsByCategory(category) {
+    return this.transactions.filter((t) => t.category === category);
+  },
+
+  getRecentTransactions(limit = 10) {
+    return this.transactions.slice(0, limit);
+  },
 };
