@@ -274,15 +274,25 @@ const FinanceDataStore = {
       this.totalBudget = importedData.totalBudget || 0;
       this.categories = importedData.categories || this.categories;
       this.transactions = importedData.transactions || [];
-      
+
       this.save();
-      console.log('✅ DATA IMPORTED');
+      console.log("✅ DATA IMPORTED");
       return true;
     } catch (error) {
-      console.error('❌ IMPORT FAILED', error);
+      console.error("❌ IMPORT FAILED", error);
       return false;
     }
   },
 
-  
+  // INITIALIZE
+  init() {
+    console.log("🚀 INITIALIZING FINANCE DATA STORE...");
+    this.load();
+    console.log("✅ READY!");
+    return this;
+  },
 };
+
+// AUTO-INITIALIZE
+FinanceDataStore.init();
+window.financeData = FinanceDataStore;
