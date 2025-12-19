@@ -38,7 +38,7 @@ const FinanceDataStore = {
     );
   },
 
-  // ADD TRANSACTION
+
   addTransaction(transaction) {
     if (!transaction.type || !transaction.amount || !transaction.description) {
       console.error("❌ MISSING REQUIRED FIELDS", transaction);
@@ -78,7 +78,6 @@ const FinanceDataStore = {
     return true;
   },
 
-  // DELETE TRANSACTION
   deleteTransaction(transactionId) {
     const index = this.transactions.findIndex((t) => t.id === transactionId);
     if (index === -1) return false;
@@ -144,5 +143,17 @@ const FinanceDataStore = {
 
   getRecentTransactions(limit = 10) {
     return this.transactions.slice(0, limit);
+  },
+
+  getCategorySummary() {
+    return Object.entries(this.categories).map(([id, c]) => ({
+      id,
+      name: c.name,
+      icon: c.icon,
+      spent: c.spent,
+      budget: c.budget,
+      percentage: c.budget ? Math.round((c.spent / c.budget) * 100) : 0,
+      remaining: c.budget - c.spent
+    }));
   },
 };
