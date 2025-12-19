@@ -68,12 +68,35 @@ const FinanceDataStore = {
     if (!this.categories[category] || amount < 0) return false;
 
     this.categories[category].budget = amount;
-    this.totalBudget = Object.values(this.categories)
-      .reduce((sum, cat) => sum + cat.budget, 0);
+    this.totalBudget = Object.values(this.categories).reduce(
+      (sum, cat) => sum + cat.budget,
+      0
+    );
 
     this.save();
     console.log(`✅ Budget set: ${category} = ₱${amount}`);
     return true;
   },
-  
-}
+
+  // DELETE TRANSACTION
+  deleteTransaction(transactionId) {
+    const index = this.transactions.findIndex((t) => t.id === transactionId);
+    if (index === -1) return false;
+
+    const t = this.transactions[index];
+
+    if (t.type === "expense") {
+      this.totalExpenses -= t.amount;
+      if (this.categories[t.category]) {
+        this.categories[t.category].spent -= t.amount;
+      }
+    } else {
+      this.totalIncome -= t.amount;
+    }
+
+    this.transactions.splice(index, 1);
+    this.save();
+    console.log("✅ Transaction deleted");
+    return true;
+  },
+};
