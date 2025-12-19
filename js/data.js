@@ -265,4 +265,24 @@ const FinanceDataStore = {
 
     console.log("📥 DATA EXPORTED");
   },
+
+  // IMPORT DATA FROM JSON
+  importData(importedData) {
+    try {
+      this.totalIncome = importedData.totalIncome || 0;
+      this.totalExpenses = importedData.totalExpenses || 0;
+      this.totalBudget = importedData.totalBudget || 0;
+      this.categories = importedData.categories || this.categories;
+      this.transactions = importedData.transactions || [];
+      
+      this.save();
+      console.log('✅ DATA IMPORTED');
+      return true;
+    } catch (error) {
+      console.error('❌ IMPORT FAILED', error);
+      return false;
+    }
+  },
+
+  
 };
