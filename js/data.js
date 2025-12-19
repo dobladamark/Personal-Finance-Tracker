@@ -38,7 +38,6 @@ const FinanceDataStore = {
     );
   },
 
-
   addTransaction(transaction) {
     if (!transaction.type || !transaction.amount || !transaction.description) {
       console.error("❌ MISSING REQUIRED FIELDS", transaction);
@@ -153,21 +152,41 @@ const FinanceDataStore = {
       spent: c.spent,
       budget: c.budget,
       percentage: c.budget ? Math.round((c.spent / c.budget) * 100) : 0,
-      remaining: c.budget - c.spent
+      remaining: c.budget - c.spent,
     }));
   },
 
-   getMonthlyExpenses() {
+  getMonthlyExpenses() {
     const monthlyData = {};
-    
+
     this.transactions
-      .filter(t => t.type === 'expense')
-      .forEach(t => {
+      .filter((t) => t.type === "expense")
+      .forEach((t) => {
         const date = new Date(t.date);
-        const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        const monthKey = `${date.getFullYear()}-${String(
+          date.getMonth() + 1
+        ).padStart(2, "0")}`;
         monthlyData[monthKey] = (monthlyData[monthKey] || 0) + t.amount;
       });
-    
+
     return monthlyData;
+  },
+
+  save() {
+    try {
+      const data = {
+        totalIncome: this.totalIncome,
+        totalExpenses: this.totalExpenses,
+        totalBudget: this.totalBudget,
+        categories: this.categories,
+        transactions: this.transactions,
+        lastUpdated: new Date().toISOString(),
+      };
+      localStorage.setItem("financeTrackerData", JSON.stringify(data));
+      return true;
+    } catch (error) {
+      console.error("❌ SAVE FAILED", error);
+      return false;
+    }
   },
 };
