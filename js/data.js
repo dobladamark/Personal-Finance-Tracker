@@ -217,4 +217,24 @@ const FinanceDataStore = {
       return false;
     }
   },
+
+  // RESET ALL DATA
+  reset() {
+    if (!confirm("⚠️ DELETE ALL DATA? CANNOT BE UNDONE!")) return false;
+
+    this.totalIncome = 0;
+    this.totalExpenses = 0;
+    this.totalBudget = 0;
+
+    Object.keys(this.categories).forEach((key) => {
+      this.categories[key].spent = 0;
+      this.categories[key].budget = 0;
+    });
+
+    this.transactions = [];
+    localStorage.removeItem("financeTrackerData");
+
+    console.log("🗑️ ALL DATA CLEARED");
+    return true;
+  },
 };
