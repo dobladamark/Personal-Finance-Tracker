@@ -237,4 +237,32 @@ const FinanceDataStore = {
     console.log("🗑️ ALL DATA CLEARED");
     return true;
   },
+
+  // EXPORT DATA AS JSON
+  exportData() {
+    const dataStr = JSON.stringify(
+      {
+        totalIncome: this.totalIncome,
+        totalExpenses: this.totalExpenses,
+        totalBudget: this.totalBudget,
+        categories: this.categories,
+        transactions: this.transactions,
+        exportedAt: new Date().toISOString(),
+      },
+      null,
+      2
+    );
+
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `finance-backup-${
+      new Date().toISOString().split("T")[0]
+    }.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+
+    console.log("📥 DATA EXPORTED");
+  },
 };
