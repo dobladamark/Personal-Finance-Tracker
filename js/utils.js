@@ -161,4 +161,14 @@ const Utils = {
       timeout = setTimeout(later, wait);
     };
   },
+
+   sortBy(array, property, order = 'asc') {
+    return [...array].sort((a, b) => {
+      if (order === 'asc') {
+        return a[property] > b[property] ? 1 : -1;
+      } else {
+        return a[property] < b[property] ? 1 : -1;
+      }
+    });
+  },
 };
