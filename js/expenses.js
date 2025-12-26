@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
     dateInput.valueAsDate = new Date();
   }
 
+  setupExpenseForm();
+  displayAllExpenses();
+  setupSearchAndFilter();
+
   console.log("✅ EXPENSES PAGE READY");
 });
 

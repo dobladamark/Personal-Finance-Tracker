@@ -957,6 +957,37 @@ body {
   background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 }
 
+/*(EDIT/DELETE) EXPENSES PAGE*/
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.btn-icon:hover {
+  background: #f3f4f6;
+  transform: scale(1.1);
+}
+
+.btn-icon.edit:hover {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
+.btn-icon.delete:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
 /*MEDIA QUERIES*/
 
 .dash-card {

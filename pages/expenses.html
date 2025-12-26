@@ -15,23 +15,31 @@
 
           <form>
             <label>Amount</label>
-            <input type="number" placeholder=" ₱0.00" />
+            <input
+              type="number"
+              placeholder="₱0.00"
+              step="0.01"
+              min="0.01"
+              required
+            />
 
             <label>Category</label>
-            <select>
-              <option>Select category</option>
-              <option>Food</option>
-              <option>Transport</option>
-              <option>Shopping</option>
+            <select required>
+              <option value="">Select category</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Others">Others</option>
             </select>
 
             <label>Description</label>
-            <input type="text" placeholder="What did you spend on?" />
+            <input type="text" placeholder="What did you spend on?" required />
 
             <div class="two-inputs">
               <div>
                 <label>Date</label>
-                <input type="date" />
+                <input type="date" required />
               </div>
               <div>
                 <label>Payment Method</label>
@@ -45,80 +53,27 @@
             <button type="submit" class="add-expense-btn">Add Expense</button>
           </form>
         </div>
+
         <div class="all-expenses-card">
           <h2>All Expenses</h2>
           <div class="expenses-header">
             <input type="text" placeholder="🔍 Search expenses…" />
             <select>
               <option>Filter by category</option>
+              <option>Food</option>
+              <option>Transport</option>
+              <option>Shopping</option>
+              <option>Utilities</option>
+              <option>Others</option>
             </select>
-          </div>
-
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Grocery Shopping</h4>
-              <p>Food & Dining • Dec 7, 2025</p>
-            </div>
-            <span class="amount negative">- ₱850.50</span>
-          </div>
-
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Electricity Bill</h4>
-              <p>Bills • Dec 6, 2025</p>
-            </div>
-            <span class="amount negative">- ₱1,250.00</span>
-          </div>
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Grocery Shopping</h4>
-              <p>Food & Dining • Dec 7, 2025</p>
-            </div>
-            <span class="amount negative">- ₱850.50</span>
-          </div>
-
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Electricity Bill</h4>
-              <p>Bills • Dec 6, 2025</p>
-            </div>
-            <span class="amount negative">- ₱1,250.00</span>
-          </div>
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Grocery Shopping</h4>
-              <p>Food & Dining • Dec 7, 2025</p>
-            </div>
-            <span class="amount negative">- ₱850.50</span>
-          </div>
-
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Electricity Bill</h4>
-              <p>Bills • Dec 6, 2025</p>
-            </div>
-            <span class="amount negative">- ₱1,250.00</span>
-          </div>
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Grocery Shopping</h4>
-              <p>Food & Dining • Dec 7, 2025</p>
-            </div>
-            <span class="amount negative">- ₱850.50</span>
-          </div>
-
-          <div class="expense-item">
-            <div class="expense-info">
-              <h4>Electricity Bill</h4>
-              <p>Bills • Dec 6, 2025</p>
-            </div>
-            <span class="amount negative">- ₱1,250.00</span>
           </div>
         </div>
       </div>
     </section>
+
     <script src="../js/data.js"></script>
     <script src="../js/utils.js"></script>
+    <script src="../js/expenses.js"></script>
     <script src="../js/navbar.js"></script>
   </body>
 </html>
