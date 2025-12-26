@@ -20,7 +20,6 @@ const Navbar = {
       .replace("LOGO_PATH/", pathPrefix);
 
     document.body.insertAdjacentHTML("afterbegin", html);
-    
 
     if (currentPage) {
       this.setActivePage(currentPage);
