@@ -204,3 +204,85 @@ function deleteExpense(id) {
     Utils.showNotification('Failed to delete expense', 'error');
   }
 }
+
+function editExpense(id) {
+  const transaction = financeData.transactions.find(t => t.id === id);
+  if (!transaction) return;
+  
+  // FILL FORM WITH EXISTING DATA
+  const form = document.querySelector('.add-expense-card form');
+  if (!form) return;
+  
+  const amountInput = form.querySelector('input[type="number"]');
+  const categorySelect = form.querySelector('select');
+  const descriptionInput = form.querySelector('input[type="text"]');
+  const dateInput = form.querySelector('input[type="date"]');
+  const paymentInput = form.querySelectorAll('input[type="text"]')[1];
+  const notesTextarea = form.querySelector('textarea');
+  
+  amountInput.value = transaction.amount;
+  categorySelect.value = transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1);
+  descriptionInput.value = transaction.description;
+  dateInput.value = transaction.date;
+  if (paymentInput) paymentInput.value = transaction.paymentMethod || '';
+  if (notesTextarea) notesTextarea.value = transaction.notes || '';
+  
+  // CHANGE SUBMIT BUTTON TO UPDATE
+  const submitBtn = form.querySelector('.add-expense-btn');
+  submitBtn.textContent = 'Update Expense';
+  submitBtn.style.background = '#f59e0b';
+  
+  // SCROLL TO FORM
+  form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  
+  // STORE EDIT MODE
+  form.dataset.editId = id;
+  
+  // MODIFY FORM HANDLER
+  const newForm = form.cloneNode(true);
+  form.parentNode.replaceChild(newForm, form);
+  
+  newForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const amount = parseFloat(newForm.querySelector('input[type="number"]').value);
+    const category = newForm.querySelector('select').value.toLowerCase();
+    const description = newForm.querySelector('input[type="text"]').value;
+    const date = newForm.querySelector('input[type="date"]').value;
+    const payment = newForm.querySelectorAll('input[type="text"]')[1].value;
+    const notes = newForm.querySelector('textarea').value;
+    
+    // UPDATE TRANSACTION
+    const success = financeData.updateTransaction(id, {
+      amount: amount,
+      category: category,
+      description: description,
+      date: date,
+      paymentMethod: payment,
+      notes: notes,
+      icon: Utils.getCategoryIcon(category)
+    });
+    
+    if (success) {
+      Utils.showNotification('Expense updated! ✅', 'success');
+      
+      // RESET FORM
+      newForm.reset();
+      newForm.querySelector('input[type="date"]').valueAsDate = new Date();
+      delete newForm.dataset.editId;
+      
+      // RESET BUTTON
+      const btn = newForm.querySelector('.add-expense-btn');
+      btn.textContent = 'Add Expense';
+      btn.style.background = '#4a6cf7';
+      
+      
+      displayAllExpenses();
+      
+      // RESTORE ORIGINAL FORM HANDLER
+      setupExpenseForm();
+    } else {
+      Utils.showNotification('Failed to update expense', 'error');
+    }
+  });
+}
