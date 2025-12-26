@@ -50,3 +50,73 @@ function updateRecentTransactions() {
     container.appendChild(li);
   });
 }
+
+
+function updateSpendingChart() {
+  const canvas = document.getElementById('spendingChart');
+  if (!canvas) return;
+  
+         
+  const monthlyExpenses = financeData.getMonthlyExpenses();
+  
+  // LAST 12 MONTHS
+  const months = [];
+  const data = [];
+  const now = new Date();
+  
+  for (let i = 11; i >= 0; i--) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    months.push(Utils.getMonthName(date.getMonth()));
+    data.push(monthlyExpenses[monthKey] || 0);
+  }
+  
+  // CREATE OR UPDATE CHART
+  const existingChart = Chart.getChart(canvas);
+  if (existingChart) {
+    existingChart.data.labels = months;
+    existingChart.data.datasets[0].data = data;
+    existingChart.update();
+  } else {
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: months,
+        datasets: [{
+          label: 'Spending',
+          data: data,
+          borderWidth: 3,
+          borderColor: '#6C8CFF',
+          backgroundColor: 'rgba(108,140,255,0.3)',
+          pointBackgroundColor: '#6C8CFF',
+          pointRadius: 6,
+          tension: 0.4,
+        }],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { display: false },
+            ticks: {
+              callback: (value) => `₱${value.toLocaleString()}`
+            }
+          },
+          x: { grid: { display: false } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `₱${ctx.raw.toLocaleString()}`
+            }
+          }
+        },
+      },
+    });
+  }
+}
+
+
+
