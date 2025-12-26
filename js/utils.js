@@ -130,4 +130,9 @@ const Utils = {
     };
     return labels[category] || category;
   },
+
+  validateAmount(amount) {
+    const num = parseFloat(amount);
+    return !isNaN(num) && num > 0;
+  },
 };
