@@ -135,4 +135,8 @@ const Utils = {
     const num = parseFloat(amount);
     return !isNaN(num) && num > 0;
   },
+  //(YYYY-MM-DD FORMAT)
+  getTodayDate() {
+    return new Date().toISOString().split('T')[0];
+  },
 };
