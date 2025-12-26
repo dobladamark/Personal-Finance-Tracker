@@ -92,4 +92,42 @@ const Utils = {
       setTimeout(() => notification.remove(), 300);
     }, 3000);
   },
+
+  getCategoryIcon(category) {
+    const icons = {
+      food: "🍔",
+      transport: "🚗",
+      shopping: "🛍️",
+      utilities: "💡",
+      others: "📦",
+      salary: "💼",
+      freelance: "💻",
+      business: "🏢",
+      investment: "📈",
+      rental: "🏠",
+      bonus: "🎁",
+      refund: "↩️",
+      gift: "🎉",
+    };
+    return icons[category] || "💰";
+  },
+
+  getCategoryLabel(category) {
+    const labels = {
+      food: "Food & Dining",
+      transport: "Transport",
+      shopping: "Shopping",
+      utilities: "Utilities",
+      others: "Others",
+      salary: "Salary/Wages",
+      freelance: "Freelance Work",
+      business: "Business Income",
+      investment: "Investment Returns",
+      rental: "Rental Income",
+      bonus: "Bonus/Commission",
+      refund: "Refund",
+      gift: "Gift/Prize",
+    };
+    return labels[category] || category;
+  },
 };
