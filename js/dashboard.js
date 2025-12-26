@@ -8,6 +8,7 @@ function updateDashboard() {
   Utils.updateField("totalExpenses", financeData.totalExpenses);
   Utils.updateField("balance", financeData.balance);
   Utils.updateField("budgetUsedPercentage", financeData.budgetUsedPercentage);
+  Utils.updateField("totalBudget", financeData.totalBudget);
 
   updateRecentTransactions();
   updateSpendingChart();
