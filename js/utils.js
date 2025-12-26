@@ -195,4 +195,25 @@ const Utils = {
       return date >= start && date <= end;
     });
   },
+
+  getThisMonthTransactions(transactions) {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    return this.filterByDateRange(transactions, startOfMonth, endOfMonth);
+  },
+
+  // GET LAST MONTH'S TRANSACTIONS
+  getLastMonthTransactions(transactions) {
+    const now = new Date();
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+    return this.filterByDateRange(
+      transactions,
+      startOfLastMonth,
+      endOfLastMonth
+    );
+  },
 };
