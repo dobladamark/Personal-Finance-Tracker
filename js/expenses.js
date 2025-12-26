@@ -189,3 +189,18 @@ function setupSearchAndFilter() {
     });
   }
 }
+
+function deleteExpense(id) {
+  if (!confirm('Are you sure you want to delete this expense?')) {
+    return;
+  }
+  
+  const success = financeData.deleteTransaction(id);
+  
+  if (success) {
+    Utils.showNotification('Expense deleted! 🗑️', 'success');
+    displayAllExpenses();
+  } else {
+    Utils.showNotification('Failed to delete expense', 'error');
+  }
+}
