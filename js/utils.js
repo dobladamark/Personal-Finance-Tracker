@@ -144,4 +144,9 @@ const Utils = {
     if (total === 0) return 0;
     return Math.round((part / total) * 100);
   },
+
+  truncateText(text, maxLength = 30) {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  },
 };
