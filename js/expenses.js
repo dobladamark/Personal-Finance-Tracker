@@ -171,3 +171,21 @@ function displayAllExpenses() {
     container.appendChild(item);
   });
 }
+
+
+function setupSearchAndFilter() {
+  const searchInput = document.querySelector('.expenses-header input[type="text"]');
+  const filterSelect = document.querySelector('.expenses-header select');
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', Utils.debounce(() => {
+      displayAllExpenses();
+    }, 300));
+  }
+  
+  if (filterSelect) {
+    filterSelect.addEventListener('change', () => {
+      displayAllExpenses();
+    });
+  }
+}
