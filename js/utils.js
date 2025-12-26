@@ -247,4 +247,52 @@ const Utils = {
       form.reset();
     }
   },
+
+  setDateToToday(inputId) {
+    const input = document.getElementById(inputId);
+    if (input) {
+      input.valueAsDate = new Date();
+    }
+  },
+
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+
+  scrollToElement(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  },
+
+
+  isMobile() {
+    return window.innerWidth <= 768;
+  },
+
+  
+  copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      this.showNotification('Copied to clipboard! 📋', 'success');
+    }).catch(() => {
+      this.showNotification('Failed to copy', 'error');
+    });
+  },
+
+  // CONFIRM ACTION
+  confirm(message) {
+    return window.confirm(message);
+  },
+
+  // GENERATE RANDOM ID
+  generateId() {
+    return Date.now() + Math.random().toString(36).substr(2, 9);
+  }
 };
+
+window.Utils = Utils;
+
+console.log('🛠️ UTILS LOADED');
