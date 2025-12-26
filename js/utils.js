@@ -255,31 +255,30 @@ const Utils = {
     }
   },
 
-
   scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   },
-
 
   scrollToElement(elementId) {
     const element = document.getElementById(elementId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   },
-
 
   isMobile() {
     return window.innerWidth <= 768;
   },
 
-  
   copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      this.showNotification('Copied to clipboard! 📋', 'success');
-    }).catch(() => {
-      this.showNotification('Failed to copy', 'error');
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        this.showNotification("Copied to clipboard! 📋", "success");
+      })
+      .catch(() => {
+        this.showNotification("Failed to copy", "error");
+      });
   },
 
   // CONFIRM ACTION
@@ -290,9 +289,9 @@ const Utils = {
   // GENERATE RANDOM ID
   generateId() {
     return Date.now() + Math.random().toString(36).substr(2, 9);
-  }
+  },
 };
-
+// MAKE GLOBALLY AVAILABLE
 window.Utils = Utils;
 
-console.log('🛠️ UTILS LOADED');
+console.log("🛠️ UTILS LOADED");
