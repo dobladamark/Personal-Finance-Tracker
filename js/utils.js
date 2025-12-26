@@ -19,18 +19,32 @@ const Utils = {
 
   formatDateShort(dateString) {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric'
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
     });
   },
 
   getMonthName(monthIndex) {
     const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
     return months[monthIndex];
   },
 
+  getCurrentMonthYear() {
+    const now = new Date();
+    return `${this.getMonthName(now.getMonth())} ${now.getFullYear()}`;
+  },
 };
