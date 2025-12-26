@@ -239,4 +239,12 @@ const Utils = {
 
     console.log("📥 CSV EXPORTED");
   },
+
+  //ALL FORM INPUTS
+  clearForm(formId) {
+    const form = document.getElementById(formId);
+    if (form) {
+      form.reset();
+    }
+  },
 };
