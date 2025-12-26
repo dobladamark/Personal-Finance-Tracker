@@ -185,4 +185,14 @@ const Utils = {
 
     return grouped;
   },
+
+  filterByDateRange(transactions, startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    return transactions.filter((t) => {
+      const date = new Date(t.date);
+      return date >= start && date <= end;
+    });
+  },
 };
