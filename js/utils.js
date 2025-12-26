@@ -149,4 +149,16 @@ const Utils = {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   },
+  //(FOR SEARCH)
+  debounce(func, wait = 300) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  },
 };
