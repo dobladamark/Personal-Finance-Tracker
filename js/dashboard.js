@@ -8,6 +8,10 @@ function updateDashboard() {
   Utils.updateField("totalExpenses", financeData.totalExpenses);
   Utils.updateField("balance", financeData.balance);
   Utils.updateField("budgetUsedPercentage", financeData.budgetUsedPercentage);
+
+  updateRecentTransactions();
+  updateSpendingChart();
+  updateCategoryChart();
 }
 
 function updateRecentTransactions() {
@@ -222,3 +226,15 @@ function updateCategoryChart() {
     });
   }
 }
+
+// INITIALIZE DASHBOARD
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("📊 DASHBOARD LOADING...");
+  updateDashboard();
+  console.log("✅ DASHBOARD READY");
+});
+
+// REFRESH DASHBOARD
+window.addEventListener("focus", () => {
+  updateDashboard();
+});
