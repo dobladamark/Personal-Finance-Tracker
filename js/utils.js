@@ -66,15 +66,30 @@ const Utils = {
   toggleEmptyState(emptyStateId, contentId, hasData) {
     const emptyState = document.getElementById(emptyStateId);
     const content = document.getElementById(contentId);
-    
+
     if (!emptyState || !content) return;
-    
+
     if (hasData) {
-      emptyState.style.display = 'none';
-      content.style.display = 'block';
+      emptyState.style.display = "none";
+      content.style.display = "block";
     } else {
-      emptyState.style.display = 'flex';
-      content.style.display = 'none';
+      emptyState.style.display = "flex";
+      content.style.display = "none";
     }
+  },
+
+  showNotification(message, type = "success") {
+    const notification = document.createElement("div");
+    notification.className = `notification notification--${type}`;
+    notification.textContent = message;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => notification.classList.add("show"), 10);
+
+    setTimeout(() => {
+      notification.classList.remove("show");
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
   },
 };
