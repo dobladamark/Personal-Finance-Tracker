@@ -162,13 +162,27 @@ const Utils = {
     };
   },
 
-   sortBy(array, property, order = 'asc') {
+  sortBy(array, property, order = "asc") {
     return [...array].sort((a, b) => {
-      if (order === 'asc') {
+      if (order === "asc") {
         return a[property] > b[property] ? 1 : -1;
       } else {
         return a[property] < b[property] ? 1 : -1;
       }
     });
+  },
+
+  groupByDate(transactions) {
+    const grouped = {};
+
+    transactions.forEach((t) => {
+      const date = t.date;
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+      grouped[date].push(t);
+    });
+
+    return grouped;
   },
 };
