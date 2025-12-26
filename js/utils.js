@@ -47,4 +47,19 @@ const Utils = {
     const now = new Date();
     return `${this.getMonthName(now.getMonth())} ${now.getFullYear()}`;
   },
+
+  // UPDATE FIELD VALUEe (USING DATA-FIELD ATTRIBUTE)
+  updateField(fieldName, value) {
+    const elements = document.querySelectorAll(`[data-field="${fieldName}"]`);
+    
+    elements.forEach(element => {
+      if (fieldName.includes('Percentage')) {
+        element.textContent = `${value}%`;
+      } else if (fieldName.includes('count') || fieldName.includes('Count')) {
+        element.textContent = value;
+      } else {
+        element.textContent = this.formatCurrency(value);
+      }
+    });
+  },
 };
