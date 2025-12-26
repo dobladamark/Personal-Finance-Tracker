@@ -137,6 +137,11 @@ const Utils = {
   },
   //(YYYY-MM-DD FORMAT)
   getTodayDate() {
-    return new Date().toISOString().split('T')[0];
+    return new Date().toISOString().split("T")[0];
+  },
+
+  calculatePercentage(part, total) {
+    if (total === 0) return 0;
+    return Math.round((part / total) * 100);
   },
 };
