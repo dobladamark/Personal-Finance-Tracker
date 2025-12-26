@@ -1,13 +1,13 @@
-HTML forms for data entry
+1. HTML forms for data entry
 
 
-Local storage for persistence
+2. Local storage for persistence
 
 
-DOM manipulation for displaying data
+3. DOM manipulation for displaying data
 
 
-Basic charts using Chart.js 
+4. Basic charts using Chart.js 
 
 
-CSV export functionality (for the spreadsheet)
+5. CSV export functionality (for the spreadsheet)
