@@ -216,4 +216,27 @@ const Utils = {
       endOfLastMonth
     );
   },
+
+  exportToCSV(data, filename = "export") {
+    // CREATE CSV HEADER
+    let csv = "Date,Type,Category,Description,Amount,Payment Method\n";
+
+    // ADD ROWS
+    data.forEach((item) => {
+      csv += `${item.date},${item.type},${item.category},"${
+        item.description
+      }",${item.amount},${item.paymentMethod || "N/A"}\n`;
+    });
+
+    // CREATE DOWNLOAD
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${filename}-${this.getTodayDate()}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+
+    console.log("📥 CSV EXPORTED");
+  },
 };
