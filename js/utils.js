@@ -51,15 +51,30 @@ const Utils = {
   // UPDATE FIELD VALUEe (USING DATA-FIELD ATTRIBUTE)
   updateField(fieldName, value) {
     const elements = document.querySelectorAll(`[data-field="${fieldName}"]`);
-    
-    elements.forEach(element => {
-      if (fieldName.includes('Percentage')) {
+
+    elements.forEach((element) => {
+      if (fieldName.includes("Percentage")) {
         element.textContent = `${value}%`;
-      } else if (fieldName.includes('count') || fieldName.includes('Count')) {
+      } else if (fieldName.includes("count") || fieldName.includes("Count")) {
         element.textContent = value;
       } else {
         element.textContent = this.formatCurrency(value);
       }
     });
+  },
+
+  toggleEmptyState(emptyStateId, contentId, hasData) {
+    const emptyState = document.getElementById(emptyStateId);
+    const content = document.getElementById(contentId);
+    
+    if (!emptyState || !content) return;
+    
+    if (hasData) {
+      emptyState.style.display = 'none';
+      content.style.display = 'block';
+    } else {
+      emptyState.style.display = 'flex';
+      content.style.display = 'none';
+    }
   },
 };
