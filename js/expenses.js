@@ -172,86 +172,94 @@ function displayAllExpenses() {
   });
 }
 
-
 function setupSearchAndFilter() {
-  const searchInput = document.querySelector('.expenses-header input[type="text"]');
-  const filterSelect = document.querySelector('.expenses-header select');
-  
+  const searchInput = document.querySelector(
+    '.expenses-header input[type="text"]'
+  );
+  const filterSelect = document.querySelector(".expenses-header select");
+
   if (searchInput) {
-    searchInput.addEventListener('input', Utils.debounce(() => {
-      displayAllExpenses();
-    }, 300));
+    searchInput.addEventListener(
+      "input",
+      Utils.debounce(() => {
+        displayAllExpenses();
+      }, 300)
+    );
   }
-  
+
   if (filterSelect) {
-    filterSelect.addEventListener('change', () => {
+    filterSelect.addEventListener("change", () => {
       displayAllExpenses();
     });
   }
 }
 
 function deleteExpense(id) {
-  if (!confirm('Are you sure you want to delete this expense?')) {
+  if (!confirm("Are you sure you want to delete this expense?")) {
     return;
   }
-  
+
   const success = financeData.deleteTransaction(id);
-  
+
   if (success) {
-    Utils.showNotification('Expense deleted! 🗑️', 'success');
+    Utils.showNotification("Expense deleted! 🗑️", "success");
     displayAllExpenses();
   } else {
-    Utils.showNotification('Failed to delete expense', 'error');
+    Utils.showNotification("Failed to delete expense", "error");
   }
 }
 
 function editExpense(id) {
-  const transaction = financeData.transactions.find(t => t.id === id);
+  const transaction = financeData.transactions.find((t) => t.id === id);
   if (!transaction) return;
-  
+
   // FILL FORM WITH EXISTING DATA
-  const form = document.querySelector('.add-expense-card form');
+  const form = document.querySelector(".add-expense-card form");
   if (!form) return;
-  
+
   const amountInput = form.querySelector('input[type="number"]');
-  const categorySelect = form.querySelector('select');
+  const categorySelect = form.querySelector("select");
   const descriptionInput = form.querySelector('input[type="text"]');
   const dateInput = form.querySelector('input[type="date"]');
   const paymentInput = form.querySelectorAll('input[type="text"]')[1];
-  const notesTextarea = form.querySelector('textarea');
-  
+  const notesTextarea = form.querySelector("textarea");
+
   amountInput.value = transaction.amount;
-  categorySelect.value = transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1);
+  categorySelect.value =
+    transaction.category.charAt(0).toUpperCase() +
+    transaction.category.slice(1);
   descriptionInput.value = transaction.description;
   dateInput.value = transaction.date;
-  if (paymentInput) paymentInput.value = transaction.paymentMethod || '';
-  if (notesTextarea) notesTextarea.value = transaction.notes || '';
-  
+  if (paymentInput) paymentInput.value = transaction.paymentMethod || "";
+  if (notesTextarea) notesTextarea.value = transaction.notes || "";
+
   // CHANGE SUBMIT BUTTON TO UPDATE
-  const submitBtn = form.querySelector('.add-expense-btn');
-  submitBtn.textContent = 'Update Expense';
-  submitBtn.style.background = '#f59e0b';
-  
+  const submitBtn = form.querySelector(".add-expense-btn");
+  submitBtn.textContent = "Update Expense";
+  submitBtn.style.background = "#f59e0b";
+
   // SCROLL TO FORM
-  form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  
+  form.scrollIntoView({ behavior: "smooth", block: "start" });
+
   // STORE EDIT MODE
   form.dataset.editId = id;
-  
+
   // MODIFY FORM HANDLER
   const newForm = form.cloneNode(true);
   form.parentNode.replaceChild(newForm, form);
-  
-  newForm.addEventListener('submit', (e) => {
+
+  newForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    const amount = parseFloat(newForm.querySelector('input[type="number"]').value);
-    const category = newForm.querySelector('select').value.toLowerCase();
+
+    const amount = parseFloat(
+      newForm.querySelector('input[type="number"]').value
+    );
+    const category = newForm.querySelector("select").value.toLowerCase();
     const description = newForm.querySelector('input[type="text"]').value;
     const date = newForm.querySelector('input[type="date"]').value;
     const payment = newForm.querySelectorAll('input[type="text"]')[1].value;
-    const notes = newForm.querySelector('textarea').value;
-    
+    const notes = newForm.querySelector("textarea").value;
+
     // UPDATE TRANSACTION
     const success = financeData.updateTransaction(id, {
       amount: amount,
@@ -260,29 +268,32 @@ function editExpense(id) {
       date: date,
       paymentMethod: payment,
       notes: notes,
-      icon: Utils.getCategoryIcon(category)
+      icon: Utils.getCategoryIcon(category),
     });
-    
+
     if (success) {
-      Utils.showNotification('Expense updated! ✅', 'success');
-      
+      Utils.showNotification("Expense updated! ✅", "success");
+
       // RESET FORM
       newForm.reset();
       newForm.querySelector('input[type="date"]').valueAsDate = new Date();
       delete newForm.dataset.editId;
-      
+
       // RESET BUTTON
-      const btn = newForm.querySelector('.add-expense-btn');
-      btn.textContent = 'Add Expense';
-      btn.style.background = '#4a6cf7';
-      
-      
+      const btn = newForm.querySelector(".add-expense-btn");
+      btn.textContent = "Add Expense";
+      btn.style.background = "#4a6cf7";
+
       displayAllExpenses();
-      
+
       // RESTORE ORIGINAL FORM HANDLER
       setupExpenseForm();
     } else {
-      Utils.showNotification('Failed to update expense', 'error');
+      Utils.showNotification("Failed to update expense", "error");
     }
   });
 }
+
+// MAKE FUNCTIONS GLOBAL
+window.deleteExpense = deleteExpense;
+window.editExpense = editExpense;
