@@ -166,3 +166,79 @@ function updateMonthlySpendingChart() {
     });
   }
 }
+
+function setupFilters() {
+  const periodFilter = document.querySelector(".filter-pill select");
+  const categoryFilter = document.querySelectorAll(".filter-pill select")[1];
+  const generateBtn = document.querySelector(".generate-btn");
+
+  if (generateBtn) {
+    generateBtn.addEventListener("click", () => {
+      const period = periodFilter ? periodFilter.value : "This Month";
+      const category = categoryFilter ? categoryFilter.value : "Category: All";
+
+      Utils.showNotification(
+        `Generating report for ${period} - ${category}...`,
+        "info"
+      );
+
+      setTimeout(() => {
+        applyFilters(period, category);
+        Utils.showNotification("Report generated! 📊", "success");
+      }, 500);
+    });
+  }
+}
+
+function applyFilters(period, category) {
+  let filteredTransactions = [...financeData.transactions];
+
+  const now = new Date();
+  switch (period) {
+    case "This Month":
+      filteredTransactions =
+        Utils.getThisMonthTransactions(filteredTransactions);
+      break;
+    case "Last Month":
+      filteredTransactions =
+        Utils.getLastMonthTransactions(filteredTransactions);
+      break;
+    case "This Year":
+      filteredTransactions = filteredTransactions.filter((t) => {
+        const date = new Date(t.date);
+        return date.getFullYear() === now.getFullYear();
+      });
+      break;
+  }
+
+  if (category && category !== "Category: All") {
+    const cat = category.toLowerCase();
+    filteredTransactions = filteredTransactions.filter(
+      (t) => t.category === cat
+    );
+  }
+
+  console.log(`Filtered ${filteredTransactions.length} transactions`);
+
+  const income = filteredTransactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const expenses = filteredTransactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const incomeBox = document.querySelector(".summary-box.income h2");
+  const expenseBox = document.querySelector(".summary-box.expense h2");
+  const savingsBox = document.querySelector(".summary-box.savings h2");
+  const savingsRateBox = document.querySelector(".savings-rate strong");
+
+  if (incomeBox) incomeBox.textContent = Utils.formatCurrency(income);
+  if (expenseBox) expenseBox.textContent = Utils.formatCurrency(expenses);
+  if (savingsBox)
+    savingsBox.textContent = Utils.formatCurrency(income - expenses);
+
+  const savingsRate =
+    income > 0 ? (((income - expenses) / income) * 100).toFixed(1) : 0;
+  if (savingsRateBox) savingsRateBox.textContent = `${savingsRate}%`;
+}
