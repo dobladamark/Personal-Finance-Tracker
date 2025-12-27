@@ -1,67 +1,28 @@
-const ctx = document.getElementById("monthlySpendingChart");
+function updateIncomeSummary() {
+  const thisMonthTransactions = Utils.getThisMonthTransactions(
+    financeData.transactions
+  );
 
-new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: [
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-    ],
-    datasets: [
-      {
-        label: "Expenses",
-        data: [2800, 3100, 3500, 3800, 3600, 4000, 3700, 3200, 3000, 2900],
-        backgroundColor: [
-          "#8a9af2",
-          "#8a9af2",
-          "#8a9af2",
-          "#8a9af2",
-          "#8a9af2",
-          "#8a9af2",
-          "#8a9af2",
-          "#8a9af2",
-          "#8a9af2",
-          "#ff8b8b",
-        ],
-        borderRadius: 8,
-        maxBarThickness: 50,
-      },
-    ],
-  },
-  options: {
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => `₱${ctx.raw.toLocaleString()}`,
-        },
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: (value) => `₱${value / 1000}k`,
-        },
-        grid: {
-          drawBorder: false,
-        },
-      },
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-    },
-  },
-});
+  const monthlyIncome = thisMonthTransactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const monthlyExpenses = thisMonthTransactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const netSavings = monthlyIncome - monthlyExpenses;
+  const savingsRate =
+    monthlyIncome > 0 ? ((netSavings / monthlyIncome) * 100).toFixed(1) : 0;
+
+  const incomeBox = document.querySelector(".summary-box.income h2");
+  const expenseBox = document.querySelector(".summary-box.expense h2");
+  const savingsBox = document.querySelector(".summary-box.savings h2");
+  const savingsRateBox = document.querySelector(".savings-rate strong");
+
+  if (incomeBox) incomeBox.textContent = Utils.formatCurrency(monthlyIncome);
+  if (expenseBox)
+    expenseBox.textContent = Utils.formatCurrency(monthlyExpenses);
+  if (savingsBox) savingsBox.textContent = Utils.formatCurrency(netSavings);
+  if (savingsRateBox) savingsRateBox.textContent = `${savingsRate}%`;
+}
