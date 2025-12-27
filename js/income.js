@@ -1,3 +1,14 @@
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("💰 INCOME PAGE LOADING...");
+
+  Utils.setDateToToday("income-date");
+  setupIncomeForm();
+  updateIncomePage();
+  setupFilters();
+
+  console.log("✅ INCOME PAGE READY");
+});
+
 function setupIncomeForm() {
   const form = document.getElementById("income-form");
   if (!form) return;
@@ -134,32 +145,48 @@ function displayIncomeList() {
   applyFilters();
 }
 
+function setupFilters() {
+  const sourceFilter = document.getElementById("filter-source");
+  const periodFilter = document.getElementById("filter-period");
 
-function applyFilters() {
-  const container = document.getElementById('income-list');
-  let incomes = financeData.getTransactionsByType('income');
-
-
-  const sourceFilter = document.getElementById('filter-source').value;
   if (sourceFilter) {
-    incomes = incomes.filter(t => t.category === sourceFilter);
+    sourceFilter.addEventListener("change", applyFilters);
   }
 
+  if (periodFilter) {
+    periodFilter.addEventListener("change", applyFilters);
+  }
+}
 
-  const periodFilter = document.getElementById('filter-period').value;
-  if (periodFilter !== 'all') {
+function applyFilters() {
+  const container = document.getElementById("income-list");
+  if (!container) return;
+
+  let incomes = financeData.getTransactionsByType("income");
+
+  const sourceFilter = document.getElementById("filter-source");
+  if (sourceFilter && sourceFilter.value) {
+    incomes = incomes.filter((t) => t.category === sourceFilter.value);
+  }
+
+  const periodFilter = document.getElementById("filter-period");
+  if (periodFilter && periodFilter.value !== "all") {
     const now = new Date();
-    incomes = incomes.filter(t => {
+    incomes = incomes.filter((t) => {
       const transactionDate = new Date(t.date);
-      switch (periodFilter) {
-        case 'this-month':
-          return transactionDate.getMonth() === now.getMonth() &&
-                 transactionDate.getFullYear() === now.getFullYear();
-        case 'last-month':
+      switch (periodFilter.value) {
+        case "this-month":
+          return (
+            transactionDate.getMonth() === now.getMonth() &&
+            transactionDate.getFullYear() === now.getFullYear()
+          );
+        case "last-month":
           const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1);
-          return transactionDate.getMonth() === lastMonth.getMonth() &&
-                 transactionDate.getFullYear() === lastMonth.getFullYear();
-        case 'this-year':
+          return (
+            transactionDate.getMonth() === lastMonth.getMonth() &&
+            transactionDate.getFullYear() === lastMonth.getFullYear()
+          );
+        case "this-year":
           return transactionDate.getFullYear() === now.getFullYear();
         default:
           return true;
@@ -169,81 +196,87 @@ function applyFilters() {
 
   if (incomes.length === 0) {
     container.innerHTML = `
-      <div class="no-data">
-        <div class="no-data__icon">💵</div>
-        <p class="no-data__text">No income entries found for selected filters.</p>
+      <div style="text-align: center; padding: 40px 20px;">
+        <div style="font-size: 50px; opacity: 0.3; margin-bottom: 10px;">💵</div>
+        <p style="color: #9ca3af; margin: 0;">No income entries found</p>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = incomes.map(income => `
+  container.innerHTML = incomes
+    .map(
+      (income) => `
     <div class="income-item">
       <div class="income-item-info">
         <div class="income-icon">${income.icon}</div>
         <div class="income-details">
           <h4>${income.description}</h4>
-          <p>${getIncomeSourceLabel(income.category)} • ${Utils.formatDate(income.date)}</p>
+          <p>${Utils.getCategoryLabel(income.category)} • ${Utils.formatDate(
+        income.date
+      )}</p>
         </div>
       </div>
       <span class="income-amount">+${Utils.formatCurrency(income.amount)}</span>
       <div class="income-actions">
-        <button class="btn-icon edit" onclick="openEditModal(${income.id})" title="Edit">
-          ✏️
-        </button>
-        <button class="btn-icon delete" onclick="deleteIncome(${income.id})" title="Delete">
-          🗑️
-        </button>
+        <button class="btn-icon edit" onclick="editIncome(${
+          income.id
+        })" title="Edit">✏️</button>
+        <button class="btn-icon delete" onclick="deleteIncome(${
+          income.id
+        })" title="Delete">🗑️</button>
       </div>
     </div>
-  `).join('');
+  `
+    )
+    .join("");
 }
 
-
 function deleteIncome(id) {
-  if (!confirm('Delete this income entry?')) return;
-  
+  if (!confirm("Delete this income entry?")) return;
+
   const success = financeData.deleteTransaction(id);
-  
+
   if (success) {
-    Utils.showNotification('Income deleted! 🗑️', 'success');
+    Utils.showNotification("Income deleted! 🗑️", "success");
     updateIncomePage();
   } else {
-    Utils.showNotification('Failed to delete income', 'error');
+    Utils.showNotification("Failed to delete income", "error");
   }
 }
 
 function editIncome(id) {
-  const transaction = financeData.transactions.find(t => t.id === id);
+  const transaction = financeData.transactions.find((t) => t.id === id);
   if (!transaction) return;
-  
-  document.getElementById('income-amount').value = transaction.amount;
-  document.getElementById('income-source').value = transaction.category;
-  document.getElementById('income-description').value = transaction.description;
-  document.getElementById('income-date').value = transaction.date;
-  document.getElementById('income-payment').value = transaction.paymentMethod || '';
-  document.getElementById('income-notes').value = transaction.notes || '';
-  
-  const form = document.getElementById('income-form');
+
+  document.getElementById("income-amount").value = transaction.amount;
+  document.getElementById("income-source").value = transaction.category;
+  document.getElementById("income-description").value = transaction.description;
+  document.getElementById("income-date").value = transaction.date;
+  document.getElementById("income-payment").value =
+    transaction.paymentMethod || "";
+  document.getElementById("income-notes").value = transaction.notes || "";
+
+  const form = document.getElementById("income-form");
   const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn.textContent = '✓ Update Income';
-  submitBtn.style.background = '#f59e0b';
-  
-  Utils.scrollToElement('income-form');
-  
+  submitBtn.textContent = "✓ Update Income";
+  submitBtn.style.background = "#f59e0b";
+
+  Utils.scrollToElement("income-form");
+
   const newForm = form.cloneNode(true);
   form.parentNode.replaceChild(newForm, form);
-  
-  newForm.addEventListener('submit', (e) => {
+
+  newForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    const amount = parseFloat(newForm.querySelector('#income-amount').value);
-    const source = newForm.querySelector('#income-source').value;
-    const description = newForm.querySelector('#income-description').value;
-    const date = newForm.querySelector('#income-date').value;
-    const payment = newForm.querySelector('#income-payment').value;
-    const notes = newForm.querySelector('#income-notes').value;
-    
+
+    const amount = parseFloat(newForm.querySelector("#income-amount").value);
+    const source = newForm.querySelector("#income-source").value;
+    const description = newForm.querySelector("#income-description").value;
+    const date = newForm.querySelector("#income-date").value;
+    const payment = newForm.querySelector("#income-payment").value;
+    const notes = newForm.querySelector("#income-notes").value;
+
     const success = financeData.updateTransaction(id, {
       amount: amount,
       category: source,
@@ -251,22 +284,27 @@ function editIncome(id) {
       date: date,
       paymentMethod: payment,
       notes: notes,
-      icon: Utils.getCategoryIcon(source)
+      icon: Utils.getCategoryIcon(source),
     });
-    
+
     if (success) {
-      Utils.showNotification('Income updated! ✅', 'success');
+      Utils.showNotification("Income updated! ✅", "success");
       newForm.reset();
-      Utils.setDateToToday('income-date');
-      
+      Utils.setDateToToday("income-date");
+
       const btn = newForm.querySelector('button[type="submit"]');
-      btn.textContent = '✓ Add Income';
-      btn.style.background = '#10b981';
-      
+      btn.textContent = "✓ Add Income";
+      btn.style.background = "#10b981";
+
       updateIncomePage();
       setupIncomeForm();
     } else {
-      Utils.showNotification('Failed to update income', 'error');
+      Utils.showNotification("Failed to update income", "error");
     }
   });
 }
+
+window.deleteIncome = deleteIncome;
+window.editIncome = editIncome;
+
+window.addEventListener("focus", updateIncomePage);
