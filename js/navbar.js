@@ -7,6 +7,7 @@ const Navbar = {
         <ul class="nav-list">
           <li class="nav-item"><a href="PATH_PREFIX/index.html" data-page="dashboard">Dashboard</a></li>
           <li class="nav-item"><a href="PATH_PREFIX/pages/budget.html" data-page="budget">Budget</a></li>
+          <li class="nav-item"><a href="PATH_PREFIX/pages/income.html" data-page="income">Income</a></li>
           <li class="nav-item"><a href="PATH_PREFIX/pages/expenses.html" data-page="expenses">Expenses</a></li>
           <li class="nav-item"><a href="PATH_PREFIX/pages/reports.html" data-page="reports">Reports</a></li>
         </ul>

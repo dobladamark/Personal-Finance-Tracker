@@ -677,8 +677,6 @@ body {
   padding: 0;
 }
 
-
-
 .set-budget-btn {
   padding: 12px 24px;
   background: #4a6cf7;
@@ -997,11 +995,6 @@ body {
   border-color: #ef4444;
 }
 
-
-/* ========================================
-   MODAL STYLES
-   ======================================== */
-
 .modal {
   position: fixed;
   top: 0;
@@ -1152,7 +1145,218 @@ body {
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
+/*INCOME PAGE*/
+.income-page {
+  background-color: var(--background);
+  padding: 50px;
+  margin: 0 auto;
+  max-width: 1600px;
+  min-height: calc(100vh - 100px);
+}
 
+.income-summary-section {
+  margin-bottom: 30px;
+}
+
+.income-summary-section h2 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.income-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  align-items: start;
+}
+
+.income-form-card {
+  position: sticky;
+  top: 20px;
+}
+
+.card-header {
+  margin-bottom: 24px;
+}
+
+.card-header h2,
+.card-header h3 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.btn--large {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 16px;
+}
+
+.income-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.breakdown-item:last-child {
+  border-bottom: none;
+}
+
+.breakdown-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.breakdown-icon {
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 12px;
+}
+
+.breakdown-details h4 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.breakdown-details p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.breakdown-amount {
+  text-align: right;
+}
+
+.breakdown-amount .amount {
+  font-size: 20px;
+  font-weight: bold;
+  color: #10b981;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.breakdown-amount .percentage {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.income-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+}
+
+.income-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  margin-bottom: 12px;
+  border: 1px solid #d1fae5;
+}
+
+.income-item-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.income-icon {
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #d1fae5;
+}
+
+.income-details h4 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.income-details p {
+  margin: 0;
+  color: #059669;
+  font-size: 14px;
+}
+
+.income-amount {
+  font-weight: bold;
+  color: #10b981;
+  font-size: 20px;
+  margin-right: 12px;
+}
+
+.income-actions {
+  display: flex;
+  gap: 8px;
+}
+
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 1200px) {
+  .income-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .income-form-card {
+    position: static;
+  }
+}
 
 /*MEDIA QUERIES*/
 
