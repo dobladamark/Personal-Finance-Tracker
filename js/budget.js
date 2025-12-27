@@ -73,3 +73,137 @@ function displayCategoryBudgets() {
     container.appendChild(item);
   });
 }
+
+function setupSetBudgetButton() {
+  const btn = document.querySelector(".set-budget-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", openBudgetModal);
+}
+
+function openBudgetModal(categoryId = null) {
+  const modal = document.createElement("div");
+  modal.id = "budget-modal";
+  modal.className = "modal";
+  modal.style.display = "flex";
+
+  const categories = financeData.getCategorySummary();
+  const editMode = categoryId !== null;
+  const editCategory = editMode
+    ? categories.find((c) => c.id === categoryId)
+    : null;
+
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="closeBudgetModal()"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>💰 ${editMode ? "Edit Budget" : "Set Budget"}</h2>
+        <button class="modal-close" onclick="closeBudgetModal()">✕</button>
+      </div>
+      
+      <form id="budget-form" style="padding: 28px;">
+        ${
+          !editMode
+            ? `
+          <div class="form-group">
+            <label>Category</label>
+            <select id="budget-category" required>
+              <option value="">Select category</option>
+              ${categories
+                .map(
+                  (cat) =>
+                    `<option value="${cat.id}">${cat.icon} ${cat.name}</option>`
+                )
+                .join("")}
+            </select>
+          </div>
+        `
+            : `
+          <input type="hidden" id="budget-category" value="${categoryId}" />
+          <div class="form-group">
+            <label>Category</label>
+            <div style="padding: 12px; background: #f3f4f6; border-radius: 8px; font-weight: 600;">
+              ${editCategory.icon} ${editCategory.name}
+            </div>
+          </div>
+        `
+        }
+        
+        <div class="form-group">
+          <label>Budget Amount</label>
+          <input 
+            type="number" 
+            id="budget-amount" 
+            placeholder="₱0.00" 
+            step="0.01" 
+            min="0.01"
+            value="${editMode ? editCategory.budget : ""}"
+            required 
+          />
+        </div>
+        
+        ${
+          editMode
+            ? `
+          <div style="background: #f0f9ff; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0; font-size: 14px; color: #0369a1;">
+              <strong>Current Spending:</strong> ₱${editCategory.spent.toLocaleString()}<br>
+              <strong>Previous Budget:</strong> ₱${editCategory.budget.toLocaleString()}
+            </p>
+          </div>
+        `
+            : ""
+        }
+        
+        <div class="modal-actions" style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <button type="button" class="btn btn--secondary" onclick="closeBudgetModal()">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn--success">
+            ${editMode ? "✓ Update Budget" : "✓ Set Budget"}
+          </button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  const form = document.getElementById("budget-form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const category = document.getElementById("budget-category").value;
+    const amount = parseFloat(document.getElementById("budget-amount").value);
+
+    if (!category) {
+      Utils.showNotification("Please select a category", "error");
+      return;
+    }
+
+    if (!amount || amount <= 0) {
+      Utils.showNotification("Please enter a valid amount", "error");
+      return;
+    }
+
+    // SET BUDGET
+    const success = financeData.setBudget(category, amount);
+
+    if (success) {
+      Utils.showNotification(
+        `Budget ${editMode ? "updated" : "set"} successfully! 🎯`,
+        "success"
+      );
+      closeBudgetModal();
+      updateBudgetSummary();
+      displayCategoryBudgets();
+    } else {
+      Utils.showNotification("Failed to set budget", "error");
+    }
+  });
+
+  // FOCUS ON AMOUNT INPUT
+  setTimeout(() => {
+    document.getElementById("budget-amount").focus();
+  }, 100);
+}
