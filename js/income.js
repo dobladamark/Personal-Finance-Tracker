@@ -133,3 +133,68 @@ function updateIncomeBreakdown() {
 function displayIncomeList() {
   applyFilters();
 }
+
+
+function applyFilters() {
+  const container = document.getElementById('income-list');
+  let incomes = financeData.getTransactionsByType('income');
+
+
+  const sourceFilter = document.getElementById('filter-source').value;
+  if (sourceFilter) {
+    incomes = incomes.filter(t => t.category === sourceFilter);
+  }
+
+
+  const periodFilter = document.getElementById('filter-period').value;
+  if (periodFilter !== 'all') {
+    const now = new Date();
+    incomes = incomes.filter(t => {
+      const transactionDate = new Date(t.date);
+      switch (periodFilter) {
+        case 'this-month':
+          return transactionDate.getMonth() === now.getMonth() &&
+                 transactionDate.getFullYear() === now.getFullYear();
+        case 'last-month':
+          const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1);
+          return transactionDate.getMonth() === lastMonth.getMonth() &&
+                 transactionDate.getFullYear() === lastMonth.getFullYear();
+        case 'this-year':
+          return transactionDate.getFullYear() === now.getFullYear();
+        default:
+          return true;
+      }
+    });
+  }
+
+  if (incomes.length === 0) {
+    container.innerHTML = `
+      <div class="no-data">
+        <div class="no-data__icon">💵</div>
+        <p class="no-data__text">No income entries found for selected filters.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = incomes.map(income => `
+    <div class="income-item">
+      <div class="income-item-info">
+        <div class="income-icon">${income.icon}</div>
+        <div class="income-details">
+          <h4>${income.description}</h4>
+          <p>${getIncomeSourceLabel(income.category)} • ${Utils.formatDate(income.date)}</p>
+        </div>
+      </div>
+      <span class="income-amount">+${Utils.formatCurrency(income.amount)}</span>
+      <div class="income-actions">
+        <button class="btn-icon edit" onclick="openEditModal(${income.id})" title="Edit">
+          ✏️
+        </button>
+        <button class="btn-icon delete" onclick="deleteIncome(${income.id})" title="Delete">
+          🗑️
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
