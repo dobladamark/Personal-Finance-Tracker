@@ -27,7 +27,9 @@
               <option>Category: All</option>
               <option>Food</option>
               <option>Transport</option>
+              <option>Shopping</option>
               <option>Utilities</option>
+              <option>Others</option>
             </select>
           </div>
 
@@ -44,43 +46,41 @@
         <div class="chart-card">
           <div class="chart-header">
             <h3>Monthly Spending Comparison</h3>
-            <span class="chart-subtitle">Year 2025</span>
+            <span class="chart-subtitle">Last 10 Months</span>
           </div>
-
           <canvas id="monthlySpendingChart"></canvas>
         </div>
+
         <div class="chart-card">
           <div class="chart-header">
             <h3>Income vs Expenses</h3>
-            <span class="chart-subtitle">December 2025</span>
+            <span class="chart-subtitle">This Month</span>
           </div>
 
           <div class="summary-box income">
             <p>💵Total Income</p>
-            <h2>₱5,450</h2>
+            <h2>₱0</h2>
           </div>
 
           <div class="summary-box expense">
             <p>💸Total Expenses</p>
-            <h2>₱3,280</h2>
+            <h2>₱0</h2>
           </div>
 
           <div class="summary-box savings">
             <p>💰Net Savings</p>
-            <h2>₱2,170</h2>
+            <h2>₱0</h2>
           </div>
 
-          <div class="savings-rate">
-            🎯 Savings Rate: <strong>39.8%</strong>
-          </div>
+          <div class="savings-rate">🎯 Savings Rate: <strong>0%</strong></div>
         </div>
       </div>
-      <h3>Financial Summary</h3>
+
       <div class="card-grid card-grid--4">
         <div class="card card--summary card--blue">
           <div class="card__content">
             <h3 class="card__title">Average Daily Spending</h3>
-            <p class="card__value">₱500</p>
+            <p class="card__value">₱0</p>
             <span class="card__footer">Based on 30 days</span>
           </div>
         </div>
@@ -88,15 +88,15 @@
         <div class="card card--summary card--yellow">
           <div class="card__content">
             <h3 class="card__title">Highest Category</h3>
-            <p class="card__value">🍔Food</p>
-            <span class="card__footer">₱6,040 (78% of Total)</span>
+            <p class="card__value">📦None</p>
+            <span class="card__footer">No expenses yet</span>
           </div>
         </div>
 
         <div class="card card--summary card--purple">
           <div class="card__content">
             <h3 class="card__title">Total Transactions</h3>
-            <p class="card__value">47</p>
+            <p class="card__value">0</p>
             <span class="card__footer">This month</span>
           </div>
         </div>
@@ -105,11 +105,12 @@
           <div class="card__content">
             <h3 class="card__title">Budget Performance</h3>
             <p class="card__value">✓ Good</p>
-            <span class="card__footer">On track with goals</span>
+            <span class="card__footer">Set budgets to track</span>
           </div>
         </div>
       </div>
     </section>
+
     <script src="../js/data.js"></script>
     <script src="../js/utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
