@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Income | Personal Finance Tracker</title>
+    <link rel="icon" type="image/x-icon" href="../assets/logo.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body data-page="income" data-path-prefix="../">
+    <section class="income-page">
+      <div class="income-summary-section">
+        <h2>Income Overview</h2>
+        <div class="card-grid card-grid--4">
+          <div class="card card--summary card--green">
+            <span class="card__icon">💰</span>
+            <div class="card__content">
+              <h3 class="card__title">Total Income</h3>
+              <p class="card__value" data-field="totalIncome">₱0.00</p>
+              <span class="card__footer">This month</span>
+            </div>
+          </div>
+
+          <div class="card card--summary card--blue">
+            <span class="card__icon">📊</span>
+            <div class="card__content">
+              <h3 class="card__title">Income Sources</h3>
+              <p class="card__value" id="income-sources-count">0</p>
+              <span class="card__footer">Active sources</span>
+            </div>
+          </div>
+
+          <div class="card card--summary card--purple">
+            <span class="card__icon">📈</span>
+            <div class="card__content">
+              <h3 class="card__title">Average Income</h3>
+              <p class="card__value" id="average-income">₱0.00</p>
+              <span class="card__footer">Per entry</span>
+            </div>
+          </div>
+
+          <div class="card card--summary card--yellow">
+            <span class="card__icon">💼</span>
+            <div class="card__content">
+              <h3 class="card__title">Last Income</h3>
+              <p class="card__value" id="last-income-amount">₱0.00</p>
+              <span class="card__footer" id="last-income-date"
+                >No income yet</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="income-content-grid">
+        <div class="card income-form-card">
+          <div class="card-header">
+            <h2>💵 Add New Income</h2>
+            <p class="card-subtitle">Record your earnings</p>
+          </div>
+
+          <form id="income-form">
+            <div class="form-group">
+              <label>Amount</label>
+              <input
+                type="number"
+                id="income-amount"
+                placeholder="₱0.00"
+                step="0.01"
+                min="0.01"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Income Source</label>
+              <select id="income-source" required>
+                <option value="">Select source</option>
+                <option value="salary">💼 Salary/Wages</option>
+                <option value="freelance">💻 Freelance Work</option>
+                <option value="business">🏢 Business Income</option>
+                <option value="investment">📈 Investment Returns</option>
+                <option value="bonus">🎁 Bonus/Commission</option>
+                <option value="gift">🎉 Gift/Prize</option>
+                <option value="other">📦 Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Description</label>
+              <input
+                type="text"
+                id="income-description"
+                placeholder="e.g., December Salary"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="income-date" required />
+              </div>
+
+              <div class="form-group">
+                <label>Received Via</label>
+                <select id="income-payment">
+                  <option value="">Select method</option>
+                  <option value="Bank">🏦 Bank Transfer</option>
+                  <option value="Cash">💵 Cash</option>
+                  <option value="Check">📝 Check</option>
+                  <option value="Online">💳 Online Payment</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Notes (Optional)</label>
+              <textarea
+                id="income-notes"
+                placeholder="Any additional details..."
+                rows="3"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--large btn--success">
+              ✓ Add Income
+            </button>
+          </form>
+        </div>
+
+        <div class="income-list-section">
+          <div class="card income-breakdown-card">
+            <div class="card-header">
+              <h3>💼 Income Sources Breakdown</h3>
+              <p class="card-subtitle">Your income by category</p>
+            </div>
+
+            <div id="income-breakdown"></div>
+          </div>
+
+          <div class="card income-history-card">
+            <div class="card-header">
+              <h3>💰 Income History</h3>
+              <div class="income-filters">
+                <select id="filter-source" class="filter-select">
+                  <option value="">All Sources</option>
+                  <option value="salary">Salary</option>
+                  <option value="freelance">Freelance</option>
+                  <option value="business">Business</option>
+                  <option value="investment">Investment</option>
+                  <option value="other">Other</option>
+                </select>
+
+                <select id="filter-period" class="filter-select">
+                  <option value="all">All Time</option>
+                  <option value="this-month">This Month</option>
+                  <option value="last-month">Last Month</option>
+                  <option value="this-year">This Year</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="income-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/income.js"></script>
+    <script src="../js/navbar.js"></script>
+  </body>
+</html>
