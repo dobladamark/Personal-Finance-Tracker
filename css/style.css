@@ -1164,6 +1164,22 @@ body {
   margin-bottom: 20px;
 }
 
+.income-summary-section .card--summary {
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.income-summary-section .card--summary .card__icon {
+  margin-bottom: 12px;
+}
+
+.income-summary-section .card--summary .card__content {
+  align-items: center;
+  text-align: center;
+}
+
 .income-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1338,7 +1354,6 @@ body {
   display: flex;
   gap: 8px;
 }
-
 
 .form-group textarea {
   width: 100%;
