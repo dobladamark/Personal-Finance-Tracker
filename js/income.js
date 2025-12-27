@@ -198,3 +198,75 @@ function applyFilters() {
     </div>
   `).join('');
 }
+
+
+function deleteIncome(id) {
+  if (!confirm('Delete this income entry?')) return;
+  
+  const success = financeData.deleteTransaction(id);
+  
+  if (success) {
+    Utils.showNotification('Income deleted! 🗑️', 'success');
+    updateIncomePage();
+  } else {
+    Utils.showNotification('Failed to delete income', 'error');
+  }
+}
+
+function editIncome(id) {
+  const transaction = financeData.transactions.find(t => t.id === id);
+  if (!transaction) return;
+  
+  document.getElementById('income-amount').value = transaction.amount;
+  document.getElementById('income-source').value = transaction.category;
+  document.getElementById('income-description').value = transaction.description;
+  document.getElementById('income-date').value = transaction.date;
+  document.getElementById('income-payment').value = transaction.paymentMethod || '';
+  document.getElementById('income-notes').value = transaction.notes || '';
+  
+  const form = document.getElementById('income-form');
+  const submitBtn = form.querySelector('button[type="submit"]');
+  submitBtn.textContent = '✓ Update Income';
+  submitBtn.style.background = '#f59e0b';
+  
+  Utils.scrollToElement('income-form');
+  
+  const newForm = form.cloneNode(true);
+  form.parentNode.replaceChild(newForm, form);
+  
+  newForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const amount = parseFloat(newForm.querySelector('#income-amount').value);
+    const source = newForm.querySelector('#income-source').value;
+    const description = newForm.querySelector('#income-description').value;
+    const date = newForm.querySelector('#income-date').value;
+    const payment = newForm.querySelector('#income-payment').value;
+    const notes = newForm.querySelector('#income-notes').value;
+    
+    const success = financeData.updateTransaction(id, {
+      amount: amount,
+      category: source,
+      description: description,
+      date: date,
+      paymentMethod: payment,
+      notes: notes,
+      icon: Utils.getCategoryIcon(source)
+    });
+    
+    if (success) {
+      Utils.showNotification('Income updated! ✅', 'success');
+      newForm.reset();
+      Utils.setDateToToday('income-date');
+      
+      const btn = newForm.querySelector('button[type="submit"]');
+      btn.textContent = '✓ Add Income';
+      btn.style.background = '#10b981';
+      
+      updateIncomePage();
+      setupIncomeForm();
+    } else {
+      Utils.showNotification('Failed to update income', 'error');
+    }
+  });
+}
