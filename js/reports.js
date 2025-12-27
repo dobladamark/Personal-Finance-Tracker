@@ -242,3 +242,104 @@ function applyFilters(period, category) {
     income > 0 ? (((income - expenses) / income) * 100).toFixed(1) : 0;
   if (savingsRateBox) savingsRateBox.textContent = `${savingsRate}%`;
 }
+
+
+function setupExportButton() {
+  const exportBtn = document.querySelector('.export-btn');
+  
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      exportToCSV();
+    });
+  }
+}
+
+// EXPORT TO CSV
+function exportToCSV() {
+  const transactions = financeData.transactions;
+  
+  if (transactions.length === 0) {
+    Utils.showNotification('No data to export', 'warning');
+    return;
+  }
+  
+  // GET ACTIVE FILTERS
+  const periodFilter = document.querySelector('.filter-pill select');
+  const categoryFilter = document.querySelectorAll('.filter-pill select')[1];
+  
+  let filteredTransactions = [...transactions];
+  let filename = 'finance-report';
+  
+  // APPLY FILTERS IF ANY
+  if (periodFilter && periodFilter.value !== 'Select Period') {
+    const period = periodFilter.value;
+    filename += `-${period.toLowerCase().replace(' ', '-')}`;
+    
+    const now = new Date();
+    switch(period) {
+      case 'This Month':
+        filteredTransactions = Utils.getThisMonthTransactions(filteredTransactions);
+        break;
+      case 'Last Month':
+        filteredTransactions = Utils.getLastMonthTransactions(filteredTransactions);
+        break;
+      case 'This Year':
+        filteredTransactions = filteredTransactions.filter(t => {
+          const date = new Date(t.date);
+          return date.getFullYear() === now.getFullYear();
+        });
+        break;
+    }
+  }
+  
+  if (categoryFilter && categoryFilter.value !== 'Category: All') {
+    const category = categoryFilter.value.toLowerCase();
+    filename += `-${category}`;
+    filteredTransactions = filteredTransactions.filter(t => t.category === category);
+  }
+  
+  // SORT BY DATE (NEWEST FIRST)
+  filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+  // CREATE CSV CONTENT
+  let csv = 'Date,Type,Category,Description,Amount,Payment Method,Notes\n';
+  
+  filteredTransactions.forEach(t => {
+    csv += `${t.date},${t.type},${Utils.getCategoryLabel(t.category)},"${t.description}",${t.amount},${t.paymentMethod || 'N/A'},"${t.notes || ''}"\n`;
+  });
+  
+  // ADD SUMMARY AT THE END
+  csv += '\n';
+  csv += 'SUMMARY\n';
+  
+  const totalIncome = filteredTransactions
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + t.amount, 0);
+  
+  const totalExpenses = filteredTransactions
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + t.amount, 0);
+  
+  csv += `Total Income,,,₱${totalIncome.toLocaleString()}\n`;
+  csv += `Total Expenses,,,₱${totalExpenses.toLocaleString()}\n`;
+  csv += `Net Balance,,,₱${(totalIncome - totalExpenses).toLocaleString()}\n`;
+  csv += `Total Transactions,,,${filteredTransactions.length}\n`;
+  
+  // CREATE DOWNLOAD
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${filename}-${Utils.getTodayDate()}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+  
+  Utils.showNotification(`CSV exported! ${filteredTransactions.length} transactions 📥`, 'success');
+}
+
+// REFRESH ON WINDOW FOCUS
+window.addEventListener('focus', () => {
+  updateIncomeSummary();
+  updateFinancialSummary();
+  updateMonthlySpendingChart();
+});
