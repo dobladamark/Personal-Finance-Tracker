@@ -2,8 +2,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🎯 BUDGET PAGE LOADING...");
 
+  updateBudgetSummary();
+  displayCategoryBudgets();
+  setupSetBudgetButton();
+
   console.log("✅ BUDGET PAGE READY");
 });
+
+function updateBudgetSummary() {
+  Utils.updateField("totalBudget", financeData.totalBudget);
+  Utils.updateField("totalExpenses", financeData.totalExpenses);
+  Utils.updateField("budgetRemaining", financeData.budgetRemaining);
+  Utils.updateField("budgetUsedPercentage", financeData.budgetUsedPercentage);
+}
 
 function displayCategoryBudgets() {
   const container = document.querySelector(".budg-percentage");
@@ -12,6 +23,7 @@ function displayCategoryBudgets() {
   container.innerHTML = "";
 
   const categories = financeData.getCategorySummary();
+
   const hasBudgets = categories.some((cat) => cat.budget > 0);
 
   if (!hasBudgets) {
@@ -76,9 +88,21 @@ function displayCategoryBudgets() {
 
 function setupSetBudgetButton() {
   const btn = document.querySelector(".set-budget-btn");
-  if (!btn) return;
 
-  btn.addEventListener("click", openBudgetModal);
+  if (!btn) {
+    console.error("❌ SET BUDGET BUTTON NOT FOUND");
+    return;
+  }
+
+  console.log("✅ SET BUDGET BUTTON FOUND");
+
+  const newBtn = btn.cloneNode(true);
+  btn.parentNode.replaceChild(newBtn, btn);
+
+  newBtn.addEventListener("click", () => {
+    console.log("🎯 OPENING BUDGET MODAL");
+    openBudgetModal();
+  });
 }
 
 function openBudgetModal(categoryId = null) {
@@ -186,7 +210,6 @@ function openBudgetModal(categoryId = null) {
       return;
     }
 
-    // SET BUDGET
     const success = financeData.setBudget(category, amount);
 
     if (success) {
@@ -202,8 +225,33 @@ function openBudgetModal(categoryId = null) {
     }
   });
 
-  // FOCUS ON AMOUNT INPUT
   setTimeout(() => {
     document.getElementById("budget-amount").focus();
   }, 100);
 }
+
+function closeBudgetModal() {
+  const modal = document.getElementById("budget-modal");
+  if (modal) {
+    modal.remove();
+  }
+}
+
+function editCategoryBudget(categoryId) {
+  openBudgetModal(categoryId);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeBudgetModal();
+  }
+});
+
+window.openBudgetModal = openBudgetModal;
+window.closeBudgetModal = closeBudgetModal;
+window.editCategoryBudget = editCategoryBudget;
+
+window.addEventListener("focus", () => {
+  updateBudgetSummary();
+  displayCategoryBudgets();
+});
