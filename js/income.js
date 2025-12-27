@@ -45,3 +45,31 @@ function setupIncomeForm() {
     }
   });
 }
+
+function updateIncomePage() {
+  updateSummaryCards();
+  updateIncomeBreakdown();
+  displayIncomeList();
+}
+
+function updateSummaryCards() {
+  const incomes = financeData.getTransactionsByType('income');
+  
+  Utils.updateField('totalIncome', financeData.totalIncome);
+  
+  const sources = new Set(incomes.map(t => t.category));
+  const sourcesEl = document.getElementById('income-sources-count');
+  if (sourcesEl) sourcesEl.textContent = sources.size;
+  
+  const avgIncome = incomes.length > 0 ? financeData.totalIncome / incomes.length : 0;
+  const avgEl = document.getElementById('average-income');
+  if (avgEl) avgEl.textContent = Utils.formatCurrency(avgIncome);
+  
+  if (incomes.length > 0) {
+    const lastIncome = incomes[0];
+    const amountEl = document.getElementById('last-income-amount');
+    const dateEl = document.getElementById('last-income-date');
+    if (amountEl) amountEl.textContent = Utils.formatCurrency(lastIncome.amount);
+    if (dateEl) dateEl.textContent = Utils.formatDate(lastIncome.date);
+  }
+}
