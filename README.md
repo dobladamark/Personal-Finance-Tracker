@@ -77,6 +77,7 @@ A modern, intuitive web application for managing personal finances with real-tim
 3. **Access the app**
    - Open `http://localhost:8000` in your browser
    - Or directly open `index.html` file
+   - Or open in this link https://personal-finance-tracker-one-lyart.vercel.app/
 
 ### Quick Start Guide
 
