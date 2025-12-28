@@ -3,11 +3,30 @@ function updateDashboard() {
   const hasData = financeData.hasData;
 
   Utils.toggleEmptyState("empty-state", "dashboard-content", hasData);
-  // UPDATE SUMMARY CARDS
-  Utils.updateField("totalIncome", financeData.totalIncome);
-  Utils.updateField("totalExpenses", financeData.totalExpenses);
-  Utils.updateField("balance", financeData.balance);
-  Utils.updateField("budgetUsedPercentage", financeData.budgetUsedPercentage);
+
+  const thisMonthTransactions = Utils.getThisMonthTransactions(
+    financeData.transactions
+  );
+
+  const thisMonthIncome = thisMonthTransactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const thisMonthExpenses = thisMonthTransactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const thisMonthBalance = thisMonthIncome - thisMonthExpenses;
+
+  const budgetUsedPercentage =
+    financeData.totalBudget > 0
+      ? Math.round((thisMonthExpenses / financeData.totalBudget) * 100)
+      : 0;
+
+  Utils.updateField("totalIncome", thisMonthIncome);
+  Utils.updateField("totalExpenses", thisMonthExpenses);
+  Utils.updateField("balance", thisMonthBalance);
+  Utils.updateField("budgetUsedPercentage", budgetUsedPercentage);
   Utils.updateField("totalBudget", financeData.totalBudget);
 
   updateRecentTransactions();
@@ -129,9 +148,26 @@ function updateCategoryChart() {
   const canvas = document.getElementById("categoryChart");
   if (!canvas) return;
 
-  const categories = financeData
-    .getCategorySummary()
-    .filter((cat) => cat.spent > 0)
+  // GET THIS MONTH'S EXPENSES ONLY
+  const thisMonthTransactions = Utils.getThisMonthTransactions(financeData.transactions);
+  const thisMonthExpenses = thisMonthTransactions.filter(t => t.type === 'expense');
+  
+  // CALCULATE CATEGORY TOTALS FOR THIS MONTH
+  const categoryTotals = {};
+  thisMonthExpenses.forEach(expense => {
+    if (!categoryTotals[expense.category]) {
+      categoryTotals[expense.category] = {
+        name: Utils.getCategoryLabel(expense.category),
+        spent: 0,
+        icon: expense.icon || Utils.getCategoryIcon(expense.category)
+      };
+    }
+    categoryTotals[expense.category].spent += expense.amount;
+  });
+  
+  // CONVERT TO ARRAY AND SORT
+  const categories = Object.values(categoryTotals)
+    .filter(cat => cat.spent > 0)
     .sort((a, b) => b.spent - a.spent);
 
   if (categories.length === 0) {
@@ -144,28 +180,25 @@ function updateCategoryChart() {
     ctx.font = "16px Roboto";
     ctx.fillStyle = "#9ca3af";
     ctx.textAlign = "center";
-    ctx.fillText("No expenses yet", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("No expenses this month", canvas.width / 2, canvas.height / 2);
     return;
   }
 
   const labels = categories.map((cat) => cat.name);
   const data = categories.map((cat) => cat.spent);
   const colors = ["#4B6EF5", "#F25C54", "#F2C94C", "#9B59B6", "#E0E0E0"];
+  
+  const totalThisMonth = data.reduce((sum, val) => sum + val, 0);
 
   // UPDATE LEGEND
   const legendContainer = document.querySelector(".donut-legend");
   if (legendContainer) {
     legendContainer.innerHTML = categories
       .map((cat, index) => {
-        const percentage = Utils.calculatePercentage(
-          cat.spent,
-          financeData.totalExpenses
-        );
+        const percentage = Utils.calculatePercentage(cat.spent, totalThisMonth);
         return `
         <li>
-          <span class="legend-box" style="background-color: ${
-            colors[index]
-          }"></span>
+          <span class="legend-box" style="background-color: ${colors[index]}"></span>
           ${cat.name} - ${Utils.formatCurrency(cat.spent)} (${percentage}%)
         </li>
       `;
@@ -178,10 +211,7 @@ function updateCategoryChart() {
   if (existingChart) {
     existingChart.data.labels = labels;
     existingChart.data.datasets[0].data = data;
-    existingChart.data.datasets[0].backgroundColor = colors.slice(
-      0,
-      categories.length
-    );
+    existingChart.data.datasets[0].backgroundColor = colors.slice(0, categories.length);
     existingChart.update();
   } else {
     new Chart(canvas, {
@@ -213,21 +243,17 @@ function updateCategoryChart() {
             ctx.fillStyle = "#2C3E50";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            const total = chart.data.datasets[0].data.reduce(
-              (a, b) => a + b,
-              0
-            );
+            const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
             ctx.fillText(`₱${total.toLocaleString()}`, width / 2, height / 2);
             ctx.font = "14px Roboto";
             ctx.fillStyle = "#6b7280";
-            ctx.fillText("Total", width / 2, height / 2 + 30);
+            ctx.fillText("This Month", width / 2, height / 2 + 30);
           },
         },
       ],
     });
   }
 }
-
 // INITIALIZE DASHBOARD
 document.addEventListener("DOMContentLoaded", () => {
   console.log("📊 DASHBOARD LOADING...");
