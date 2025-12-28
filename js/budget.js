@@ -1,6 +1,10 @@
-// INITIALIZE PAGE
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🎯 BUDGET PAGE LOADING...");
+
+  const title = document.getElementById("budget-title");
+  if (title) {
+    title.textContent = `${Utils.getCurrentMonthYear()} Budget Overview`;
+  }
 
   updateBudgetSummary();
   displayCategoryBudgets();
@@ -10,10 +14,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function updateBudgetSummary() {
+  const thisMonthTransactions = Utils.getThisMonthTransactions(
+    financeData.transactions
+  );
+  const thisMonthExpenses = thisMonthTransactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const budgetRemaining = financeData.totalBudget - thisMonthExpenses;
+  const budgetUsedPercentage =
+    financeData.totalBudget > 0
+      ? Math.round((thisMonthExpenses / financeData.totalBudget) * 100)
+      : 0;
+
   Utils.updateField("totalBudget", financeData.totalBudget);
-  Utils.updateField("totalExpenses", financeData.totalExpenses);
-  Utils.updateField("budgetRemaining", financeData.budgetRemaining);
-  Utils.updateField("budgetUsedPercentage", financeData.budgetUsedPercentage);
+  Utils.updateField("totalExpenses", thisMonthExpenses);
+  Utils.updateField("budgetRemaining", budgetRemaining);
+  Utils.updateField("budgetUsedPercentage", budgetUsedPercentage);
 }
 
 function displayCategoryBudgets() {
@@ -42,9 +59,28 @@ function displayCategoryBudgets() {
     return;
   }
 
+  const thisMonthTransactions = Utils.getThisMonthTransactions(
+    financeData.transactions
+  );
+  const thisMonthExpenses = thisMonthTransactions.filter(
+    (t) => t.type === "expense"
+  );
+
+  const categorySpending = {};
+  thisMonthExpenses.forEach((expense) => {
+    if (!categorySpending[expense.category]) {
+      categorySpending[expense.category] = 0;
+    }
+    categorySpending[expense.category] += expense.amount;
+  });
+
   categories.forEach((category) => {
-    const percentage = category.percentage;
-    const remaining = category.remaining;
+    const thisMonthSpent = categorySpending[category.id] || 0;
+    const percentage =
+      category.budget > 0
+        ? Math.round((thisMonthSpent / category.budget) * 100)
+        : 0;
+    const remaining = category.budget - thisMonthSpent;
     const isOverBudget = remaining < 0;
 
     let barColor = "#10b981";
@@ -59,7 +95,7 @@ function displayCategoryBudgets() {
       <span class="budgcat-icon-cards">${category.icon}</span>
       <div class="budg-text-content">
         <h4>${category.name}</h4>
-        <p>₱${category.spent.toLocaleString()} of ₱${category.budget.toLocaleString()}</p>
+        <p>₱${thisMonthSpent.toLocaleString()} of ₱${category.budget.toLocaleString()}</p>
         ${
           isOverBudget
             ? `<p style="color: #ef4444; font-size: 12px; margin-top: 4px;">Over by ₱${Math.abs(

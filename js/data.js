@@ -291,6 +291,29 @@ const FinanceDataStore = {
     console.log("✅ READY!");
     return this;
   },
+
+  
+  getThisMonthCategorySpending() {
+    const now = new Date();
+    const thisMonthTransactions = this.transactions.filter((t) => {
+      const date = new Date(t.date);
+      return (
+        t.type === "expense" &&
+        date.getMonth() === now.getMonth() &&
+        date.getFullYear() === now.getFullYear()
+      );
+    });
+
+    const spending = {};
+    thisMonthTransactions.forEach((t) => {
+      if (!spending[t.category]) {
+        spending[t.category] = 0;
+      }
+      spending[t.category] += t.amount;
+    });
+
+    return spending;
+  },
 };
 
 // AUTO-INITIALIZE
