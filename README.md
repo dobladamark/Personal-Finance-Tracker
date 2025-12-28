@@ -102,29 +102,6 @@ A modern, intuitive web application for managing personal finances with real-tim
    - Visit Reports page for detailed analytics
    - Export data to CSV for external analysis
 
-## 📁 Project Structure
-```
-finance-tracker/
-├── index.html              # Dashboard page
-├── pages/
-│   ├── income.html        # Income management
-│   ├── budget.html        # Budget tracking
-│   ├── expenses.html      # Expense tracking
-│   └── reports.html       # Analytics & reports
-├── css/
-│   └── style.css          # All styles
-├── js/
-│   ├── data.js           # Central data store
-│   ├── utils.js          # Helper functions
-│   ├── dashboard.js      # Dashboard logic
-│   ├── income.js         # Income page logic
-│   ├── budget.js         # Budget page logic
-│   ├── expenses.js       # Expenses page logic
-│   ├── reports.js        # Reports page logic
-│   └── navbar.js         # Navigation component
-└── assets/
-    └── logo.png          # Application logo
-```
 
 ## 🛠️ Technology Stack
 
@@ -231,23 +208,7 @@ financeData.reset(); // Clears all data (cannot be undone)
 - Maximum localStorage limit (~5-10MB depending on browser)
 - No multi-currency support (PHP only)
 
-## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Development Guidelines
-
-- Follow existing code style and conventions
-- Test thoroughly before submitting
-- Update documentation for new features
-- Keep functions small and focused
-- Use meaningful variable names
 
 ## 📝 Future Enhancements
 
@@ -262,16 +223,13 @@ Contributions are welcome! Here's how you can help:
 - [ ] Investment portfolio tracking
 - [ ] Multi-user accounts
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
-- Portfolio: [yourportfolio.com](https://yourportfolio.com)
+- GitHub: [@yourusername](https://github.com/dobladamark)
+- Email: dobladamark1@gmail.com
+- Portfolio: [yourportfolio.com](https://dobladamark.com)
 
 ## 🙏 Acknowledgments
 
@@ -279,17 +237,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Font Awesome for icons (if used)
 - Inspiration from popular finance apps like Mint, YNAB, and Wallet
 
-## 📞 Support
 
-If you encounter any issues or have questions:
-1. Check the [Issues](https://github.com/yourusername/finance-tracker/issues) page
-2. Open a new issue with detailed description
-3. Contact: your.email@example.com
-
-## 🌟 Show Your Support
-
-Give a ⭐️ if this project helped you manage your finances better!
-
----
 
 **Made with ❤️ for better financial management**
