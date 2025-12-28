@@ -227,9 +227,9 @@ financeData.reset(); // Clears all data (cannot be undone)
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/dobladamark)
+- GitHub: [@dobladamark](https://github.com/dobladamark)
 - Email: dobladamark1@gmail.com
-- Portfolio: [yourportfolio.com](https://dobladamark.com)
+- Portfolio: [dobladamark.com](https://dobladamark.com)
 
 ## 🙏 Acknowledgments
 
