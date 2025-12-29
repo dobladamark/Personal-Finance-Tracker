@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("💰 INCOME PAGE LOADING...");
 
+  const title = document.getElementById("income-overview-title");
+  if (title) {
+    title.textContent = `${Utils.getCurrentMonthYear()} Income Overview`;
+  }
+
   Utils.setDateToToday("income-date");
   setupIncomeForm();
   updateIncomePage();
@@ -64,26 +69,43 @@ function updateIncomePage() {
 }
 
 function updateSummaryCards() {
-  const incomes = financeData.getTransactionsByType("income");
+  const thisMonthTransactions = Utils.getThisMonthTransactions(
+    financeData.transactions
+  );
+  const thisMonthIncomes = thisMonthTransactions.filter(
+    (t) => t.type === "income"
+  );
 
-  Utils.updateField("totalIncome", financeData.totalIncome);
+  const thisMonthTotalIncome = thisMonthIncomes.reduce(
+    (sum, t) => sum + t.amount,
+    0
+  );
 
-  const sources = new Set(incomes.map((t) => t.category));
+  Utils.updateField("totalIncome", thisMonthTotalIncome);
+
+  const sources = new Set(thisMonthIncomes.map((t) => t.category));
   const sourcesEl = document.getElementById("income-sources-count");
   if (sourcesEl) sourcesEl.textContent = sources.size;
 
   const avgIncome =
-    incomes.length > 0 ? financeData.totalIncome / incomes.length : 0;
+    thisMonthIncomes.length > 0
+      ? thisMonthTotalIncome / thisMonthIncomes.length
+      : 0;
   const avgEl = document.getElementById("average-income");
   if (avgEl) avgEl.textContent = Utils.formatCurrency(avgIncome);
 
-  if (incomes.length > 0) {
-    const lastIncome = incomes[0];
+  if (thisMonthIncomes.length > 0) {
+    const lastIncome = thisMonthIncomes[0];
     const amountEl = document.getElementById("last-income-amount");
     const dateEl = document.getElementById("last-income-date");
     if (amountEl)
       amountEl.textContent = Utils.formatCurrency(lastIncome.amount);
     if (dateEl) dateEl.textContent = Utils.formatDate(lastIncome.date);
+  } else {
+    const amountEl = document.getElementById("last-income-amount");
+    const dateEl = document.getElementById("last-income-date");
+    if (amountEl) amountEl.textContent = "₱0.00";
+    if (dateEl) dateEl.textContent = "No income this month";
   }
 }
 
@@ -91,20 +113,25 @@ function updateIncomeBreakdown() {
   const container = document.getElementById("income-breakdown");
   if (!container) return;
 
-  const incomes = financeData.getTransactionsByType("income");
+  const thisMonthTransactions = Utils.getThisMonthTransactions(
+    financeData.transactions
+  );
+  const thisMonthIncomes = thisMonthTransactions.filter(
+    (t) => t.type === "income"
+  );
 
-  if (incomes.length === 0) {
+  if (thisMonthIncomes.length === 0) {
     container.innerHTML = `
       <div style="text-align: center; padding: 40px 20px;">
         <div style="font-size: 50px; opacity: 0.3; margin-bottom: 10px;">📊</div>
-        <p style="color: #9ca3af; margin: 0;">No income data yet</p>
+        <p style="color: #9ca3af; margin: 0;">No income this month</p>
       </div>
     `;
     return;
   }
 
   const breakdown = {};
-  incomes.forEach((income) => {
+  thisMonthIncomes.forEach((income) => {
     if (!breakdown[income.category]) {
       breakdown[income.category] = { total: 0, count: 0, icon: income.icon };
     }
@@ -116,19 +143,20 @@ function updateIncomeBreakdown() {
     (a, b) => b[1].total - a[1].total
   );
 
+  const thisMonthTotal = thisMonthIncomes.reduce((sum, t) => sum + t.amount, 0);
+
   container.innerHTML = sorted
     .map(([source, data]) => {
-      const percentage = Utils.calculatePercentage(
-        data.total,
-        financeData.totalIncome
-      );
+      const percentage = Utils.calculatePercentage(data.total, thisMonthTotal);
       return `
       <div class="breakdown-item">
         <div class="breakdown-info">
           <div class="breakdown-icon">${data.icon}</div>
           <div class="breakdown-details">
             <h4>${Utils.getCategoryLabel(source)}</h4>
-            <p>${data.count} ${data.count === 1 ? "entry" : "entries"}</p>
+            <p>${data.count} ${
+        data.count === 1 ? "entry" : "entries"
+      } this month</p>
           </div>
         </div>
         <div class="breakdown-amount">
@@ -140,7 +168,6 @@ function updateIncomeBreakdown() {
     })
     .join("");
 }
-
 function displayIncomeList() {
   applyFilters();
 }
@@ -170,11 +197,13 @@ function applyFilters() {
   }
 
   const periodFilter = document.getElementById("filter-period");
-  if (periodFilter && periodFilter.value !== "all") {
+  const period = periodFilter ? periodFilter.value : "this-month"; // DEFAULT TO THIS MONTH
+
+  if (period !== "all") {
     const now = new Date();
     incomes = incomes.filter((t) => {
       const transactionDate = new Date(t.date);
-      switch (periodFilter.value) {
+      switch (period) {
         case "this-month":
           return (
             transactionDate.getMonth() === now.getMonth() &&
