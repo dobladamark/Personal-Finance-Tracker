@@ -14,16 +14,33 @@
         <div class="filter-bar">
           <div class="filter-pill">
             <span class="filter-icon">📅</span>
-            <select>
-              <option>Select Period</option>
-              <option>This Month</option>
-              <option>Last Month</option>
-              <option>This Year</option>
+            <select id="month-select">
+              <option value="">All Months</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
             </select>
           </div>
+          
+          <div class="filter-pill">
+            <span class="filter-icon">📆</span>
+            <select id="year-select">
+              <option value="">All Years</option>
+            </select>
+          </div>
+          
           <div class="filter-pill">
             <span class="filter-icon">🏷️</span>
-            <select>
+            <select id="category-select">
               <option>Category: All</option>
               <option>Food</option>
               <option>Transport</option>
@@ -54,25 +71,25 @@
         <div class="chart-card">
           <div class="chart-header">
             <h3>Income vs Expenses</h3>
-            <span class="chart-subtitle">This Month</span>
+            <span class="chart-subtitle" id="comparison-subtitle">This Month</span>
           </div>
 
           <div class="summary-box income">
             <p>💵Total Income</p>
-            <h2>₱0</h2>
+            <h2 id="filtered-income">₱0</h2>
           </div>
 
           <div class="summary-box expense">
             <p>💸Total Expenses</p>
-            <h2>₱0</h2>
+            <h2 id="filtered-expenses">₱0</h2>
           </div>
 
           <div class="summary-box savings">
             <p>💰Net Savings</p>
-            <h2>₱0</h2>
+            <h2 id="filtered-savings">₱0</h2>
           </div>
 
-          <div class="savings-rate">🎯 Savings Rate: <strong>0%</strong></div>
+          <div class="savings-rate">🎯 Savings Rate: <strong id="filtered-rate">0%</strong></div>
         </div>
       </div>
 
@@ -80,32 +97,32 @@
         <div class="card card--summary card--blue">
           <div class="card__content">
             <h3 class="card__title">Average Daily Spending</h3>
-            <p class="card__value">₱0</p>
-            <span class="card__footer">Based on 30 days</span>
+            <p class="card__value" id="avg-daily">₱0</p>
+            <span class="card__footer" id="days-based">Based on 30 days</span>
           </div>
         </div>
 
         <div class="card card--summary card--yellow">
           <div class="card__content">
             <h3 class="card__title">Highest Category</h3>
-            <p class="card__value">📦None</p>
-            <span class="card__footer">No expenses yet</span>
+            <p class="card__value" id="highest-cat">📦None</p>
+            <span class="card__footer" id="highest-cat-footer">No expenses yet</span>
           </div>
         </div>
 
         <div class="card card--summary card--purple">
           <div class="card__content">
             <h3 class="card__title">Total Transactions</h3>
-            <p class="card__value">0</p>
-            <span class="card__footer">This month</span>
+            <p class="card__value" id="total-trans">0</p>
+            <span class="card__footer" id="trans-footer">This month</span>
           </div>
         </div>
 
         <div class="card card--summary card--green">
           <div class="card__content">
             <h3 class="card__title">Budget Performance</h3>
-            <p class="card__value">✓ Good</p>
-            <span class="card__footer">Set budgets to track</span>
+            <p class="card__value" id="budget-perf">✓ Good</p>
+            <span class="card__footer" id="budget-perf-footer">Set budgets to track</span>
           </div>
         </div>
       </div>

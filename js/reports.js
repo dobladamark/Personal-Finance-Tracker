@@ -1,7 +1,8 @@
-// INITIALIZE PAGE
 document.addEventListener("DOMContentLoaded", () => {
   console.log("📊 REPORTS PAGE LOADING...");
 
+  populateYearSelect();
+  setCurrentMonthYear();
   updateIncomeSummary();
   updateFinancialSummary();
   updateMonthlySpendingChart();
@@ -10,6 +11,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("✅ REPORTS PAGE READY");
 });
+
+function populateYearSelect() {
+  const yearSelect = document.getElementById("year-select");
+  if (!yearSelect) return;
+
+  const years = new Set();
+  const currentYear = new Date().getFullYear();
+
+  years.add(currentYear);
+  years.add(currentYear + 1);
+
+  financeData.transactions.forEach((t) => {
+    const year = new Date(t.date).getFullYear();
+    years.add(year);
+  });
+
+  if (financeData.transactions.length > 0) {
+    const transactionYears = financeData.transactions.map((t) =>
+      new Date(t.date).getFullYear()
+    );
+    const oldestYear = Math.min(...transactionYears);
+    const newestYear = Math.max(...transactionYears);
+
+    for (
+      let year = oldestYear;
+      year <= Math.max(currentYear + 1, newestYear);
+      year++
+    ) {
+      years.add(year);
+    }
+  }
+
+  const sortedYears = Array.from(years).sort((a, b) => b - a);
+
+  yearSelect.innerHTML = '<option value="">All Years</option>';
+
+  sortedYears.forEach((year) => {
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    yearSelect.appendChild(option);
+  });
+}
+
+function setCurrentMonthYear() {
+  const now = new Date();
+  const monthSelect = document.getElementById("month-select");
+  const yearSelect = document.getElementById("year-select");
+
+  if (monthSelect) {
+    monthSelect.value = now.getMonth() + 1;
+  }
+
+  if (yearSelect) {
+    yearSelect.value = now.getFullYear();
+  }
+}
 
 function updateIncomeSummary() {
   const thisMonthTransactions = Utils.getThisMonthTransactions(
@@ -28,10 +86,10 @@ function updateIncomeSummary() {
   const savingsRate =
     monthlyIncome > 0 ? ((netSavings / monthlyIncome) * 100).toFixed(1) : 0;
 
-  const incomeBox = document.querySelector(".summary-box.income h2");
-  const expenseBox = document.querySelector(".summary-box.expense h2");
-  const savingsBox = document.querySelector(".summary-box.savings h2");
-  const savingsRateBox = document.querySelector(".savings-rate strong");
+  const incomeBox = document.getElementById("filtered-income");
+  const expenseBox = document.getElementById("filtered-expenses");
+  const savingsBox = document.getElementById("filtered-savings");
+  const savingsRateBox = document.getElementById("filtered-rate");
 
   if (incomeBox) incomeBox.textContent = Utils.formatCurrency(monthlyIncome);
   if (expenseBox)
@@ -69,20 +127,16 @@ function updateFinancialSummary() {
   else if (budgetPercentage >= 90) performance = "⚠️ Warning";
   else if (budgetPercentage >= 75) performance = "→ Moderate";
 
-  const avgDailyEl = document.querySelector(".card--blue .card__value");
-  const avgDailyFooter = document.querySelector(".card--blue .card__footer");
+  const avgDailyEl = document.getElementById("avg-daily");
+  const avgDailyFooter = document.getElementById("days-based");
 
-  const highestCatEl = document.querySelector(".card--yellow .card__value");
-  const highestCatFooter = document.querySelector(
-    ".card--yellow .card__footer"
-  );
+  const highestCatEl = document.getElementById("highest-cat");
+  const highestCatFooter = document.getElementById("highest-cat-footer");
 
-  const totalTransEl = document.querySelector(".card--purple .card__value");
+  const totalTransEl = document.getElementById("total-trans");
 
-  const performanceEl = document.querySelector(".card--green .card__value");
-  const performanceFooter = document.querySelector(
-    ".card--green .card__footer"
-  );
+  const performanceEl = document.getElementById("budget-perf");
+  const performanceFooter = document.getElementById("budget-perf-footer");
 
   if (avgDailyEl) avgDailyEl.textContent = Utils.formatCurrency(avgDaily);
   if (avgDailyFooter)
@@ -181,47 +235,53 @@ function updateMonthlySpendingChart() {
 }
 
 function setupFilters() {
-  const periodFilter = document.querySelector(".filter-pill select");
-  const categoryFilter = document.querySelectorAll(".filter-pill select")[1];
+  const monthSelect = document.getElementById("month-select");
+  const yearSelect = document.getElementById("year-select");
+  const categoryFilter = document.getElementById("category-select");
   const generateBtn = document.querySelector(".generate-btn");
 
   if (generateBtn) {
     generateBtn.addEventListener("click", () => {
-      const period = periodFilter ? periodFilter.value : "This Month";
+      const month = monthSelect ? monthSelect.value : "";
+      const year = yearSelect ? yearSelect.value : "";
       const category = categoryFilter ? categoryFilter.value : "Category: All";
 
+      let periodText = "";
+      if (month && year) {
+        const monthName = monthSelect.options[monthSelect.selectedIndex].text;
+        periodText = `${monthName} ${year}`;
+      } else if (month) {
+        const monthName = monthSelect.options[monthSelect.selectedIndex].text;
+        periodText = monthName;
+      } else if (year) {
+        periodText = year;
+      } else {
+        periodText = "All Time";
+      }
+
       Utils.showNotification(
-        `Generating report for ${period} - ${category}...`,
+        `Generating report for ${periodText} - ${category}...`,
         "info"
       );
 
       setTimeout(() => {
-        applyFilters(period, category);
+        applyFilters(month, year, category);
         Utils.showNotification("Report generated! 📊", "success");
       }, 500);
     });
   }
 }
 
-function applyFilters(period, category) {
+function applyFilters(month, year, category) {
   let filteredTransactions = [...financeData.transactions];
 
-  const now = new Date();
-  switch (period) {
-    case "This Month":
-      filteredTransactions =
-        Utils.getThisMonthTransactions(filteredTransactions);
-      break;
-    case "Last Month":
-      filteredTransactions =
-        Utils.getLastMonthTransactions(filteredTransactions);
-      break;
-    case "This Year":
-      filteredTransactions = filteredTransactions.filter((t) => {
-        const date = new Date(t.date);
-        return date.getFullYear() === now.getFullYear();
-      });
-      break;
+  if (month || year) {
+    filteredTransactions = filteredTransactions.filter((t) => {
+      const date = new Date(t.date);
+      const matchMonth = month ? date.getMonth() + 1 === parseInt(month) : true;
+      const matchYear = year ? date.getFullYear() === parseInt(year) : true;
+      return matchMonth && matchYear;
+    });
   }
 
   if (category && category !== "Category: All") {
@@ -241,10 +301,55 @@ function applyFilters(period, category) {
     .filter((t) => t.type === "expense")
     .reduce((sum, t) => sum + t.amount, 0);
 
-  const incomeBox = document.querySelector(".summary-box.income h2");
-  const expenseBox = document.querySelector(".summary-box.expense h2");
-  const savingsBox = document.querySelector(".summary-box.savings h2");
-  const savingsRateBox = document.querySelector(".savings-rate strong");
+  const subtitle = document.getElementById("comparison-subtitle");
+  if (subtitle) {
+    let periodText = "";
+    if (month && year) {
+      const monthNames = [
+        "",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      periodText = `${monthNames[parseInt(month)]} ${year}`;
+    } else if (month) {
+      const monthNames = [
+        "",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      periodText = monthNames[parseInt(month)];
+    } else if (year) {
+      periodText = year;
+    } else {
+      periodText = "All Time";
+    }
+    subtitle.textContent = periodText;
+  }
+
+  const incomeBox = document.getElementById("filtered-income");
+  const expenseBox = document.getElementById("filtered-expenses");
+  const savingsBox = document.getElementById("filtered-savings");
+  const savingsRateBox = document.getElementById("filtered-rate");
 
   if (incomeBox) incomeBox.textContent = Utils.formatCurrency(income);
   if (expenseBox) expenseBox.textContent = Utils.formatCurrency(expenses);
@@ -254,6 +359,126 @@ function applyFilters(period, category) {
   const savingsRate =
     income > 0 ? (((income - expenses) / income) * 100).toFixed(1) : 0;
   if (savingsRateBox) savingsRateBox.textContent = `${savingsRate}%`;
+
+  updateFinancialSummaryWithFiltered(filteredTransactions, month, year);
+}
+
+function updateFinancialSummaryWithFiltered(transactions, month, year) {
+  const expenses = transactions.filter((t) => t.type === "expense");
+
+  let days = 30;
+  if (month && year) {
+    days = new Date(parseInt(year), parseInt(month), 0).getDate();
+  } else if (month) {
+    const currentYear = new Date().getFullYear();
+    days = new Date(currentYear, parseInt(month), 0).getDate();
+  } else if (year) {
+    const selectedYear = parseInt(year);
+    const currentYear = new Date().getFullYear();
+    if (selectedYear === currentYear) {
+      const startOfYear = new Date(selectedYear, 0, 1);
+      const today = new Date();
+      days = Math.floor((today - startOfYear) / (1000 * 60 * 60 * 24)) + 1;
+    } else {
+      days = 365;
+    }
+  } else {
+    if (transactions.length > 0) {
+      const dates = transactions.map((t) => new Date(t.date));
+      const minDate = new Date(Math.min(...dates));
+      const maxDate = new Date(Math.max(...dates));
+      days = Math.floor((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1;
+    }
+  }
+
+  const totalExpenses = expenses.reduce((sum, t) => sum + t.amount, 0);
+  const avgDaily = days > 0 ? totalExpenses / days : 0;
+
+  const categoryTotals = {};
+  expenses.forEach((exp) => {
+    if (!categoryTotals[exp.category]) {
+      categoryTotals[exp.category] = {
+        name: Utils.getCategoryLabel(exp.category),
+        icon: exp.icon || Utils.getCategoryIcon(exp.category),
+        spent: 0,
+      };
+    }
+    categoryTotals[exp.category].spent += exp.amount;
+  });
+
+  const highestCategory = Object.values(categoryTotals).reduce(
+    (max, cat) => (cat.spent > max.spent ? cat : max),
+    { spent: 0, name: "None", icon: "📦" }
+  );
+
+  const totalTransactions = transactions.length;
+
+  const avgDailyEl = document.getElementById("avg-daily");
+  const avgDailyFooter = document.getElementById("days-based");
+  const highestCatEl = document.getElementById("highest-cat");
+  const highestCatFooter = document.getElementById("highest-cat-footer");
+  const totalTransEl = document.getElementById("total-trans");
+  const transFooter = document.getElementById("trans-footer");
+
+  if (avgDailyEl) avgDailyEl.textContent = Utils.formatCurrency(avgDaily);
+  if (avgDailyFooter) avgDailyFooter.textContent = `Based on ${days} days`;
+
+  if (highestCatEl)
+    highestCatEl.textContent = `${highestCategory.icon}${highestCategory.name}`;
+  if (highestCatFooter && highestCategory.spent > 0) {
+    const percentage = Utils.calculatePercentage(
+      highestCategory.spent,
+      totalExpenses
+    );
+    highestCatFooter.textContent = `${Utils.formatCurrency(
+      highestCategory.spent
+    )} (${percentage}% of Total)`;
+  } else if (highestCatFooter) {
+    highestCatFooter.textContent = "No expenses in period";
+  }
+
+  if (totalTransEl) totalTransEl.textContent = totalTransactions;
+  if (transFooter) {
+    if (month && year) {
+      const monthNames = [
+        "",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      transFooter.textContent = `${monthNames[parseInt(month)]} ${year}`;
+    } else if (month) {
+      const monthNames = [
+        "",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      transFooter.textContent = monthNames[parseInt(month)];
+    } else if (year) {
+      transFooter.textContent = year;
+    } else {
+      transFooter.textContent = "All time";
+    }
+  }
 }
 
 function setupExportButton() {
@@ -266,7 +491,6 @@ function setupExportButton() {
   }
 }
 
-// EXPORT TO CSV
 function exportToCSV() {
   const transactions = financeData.transactions;
 
@@ -275,33 +499,44 @@ function exportToCSV() {
     return;
   }
 
-  const periodFilter = document.querySelector(".filter-pill select");
-  const categoryFilter = document.querySelectorAll(".filter-pill select")[1];
+  const monthSelect = document.getElementById("month-select");
+  const yearSelect = document.getElementById("year-select");
+  const categoryFilter = document.getElementById("category-select");
 
   let filteredTransactions = [...transactions];
   let filename = "finance-report";
 
-  if (periodFilter && periodFilter.value !== "Select Period") {
-    const period = periodFilter.value;
-    filename += `-${period.toLowerCase().replace(" ", "-")}`;
+  if (monthSelect && monthSelect.value) {
+    const month = parseInt(monthSelect.value);
+    const monthNames = [
+      "",
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "may",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "oct",
+      "nov",
+      "dec",
+    ];
+    filename += `-${monthNames[month]}`;
+    filteredTransactions = filteredTransactions.filter((t) => {
+      const date = new Date(t.date);
+      return date.getMonth() + 1 === month;
+    });
+  }
 
-    const now = new Date();
-    switch (period) {
-      case "This Month":
-        filteredTransactions =
-          Utils.getThisMonthTransactions(filteredTransactions);
-        break;
-      case "Last Month":
-        filteredTransactions =
-          Utils.getLastMonthTransactions(filteredTransactions);
-        break;
-      case "This Year":
-        filteredTransactions = filteredTransactions.filter((t) => {
-          const date = new Date(t.date);
-          return date.getFullYear() === now.getFullYear();
-        });
-        break;
-    }
+  if (yearSelect && yearSelect.value) {
+    const year = parseInt(yearSelect.value);
+    filename += `-${year}`;
+    filteredTransactions = filteredTransactions.filter((t) => {
+      const date = new Date(t.date);
+      return date.getFullYear() === year;
+    });
   }
 
   if (categoryFilter && categoryFilter.value !== "Category: All") {
@@ -310,6 +545,14 @@ function exportToCSV() {
     filteredTransactions = filteredTransactions.filter(
       (t) => t.category === category
     );
+  }
+
+  if (filteredTransactions.length === 0) {
+    Utils.showNotification(
+      "No transactions match the selected filters",
+      "warning"
+    );
+    return;
   }
 
   filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -353,6 +596,7 @@ function exportToCSV() {
 }
 
 window.addEventListener("focus", () => {
+  populateYearSelect();
   updateIncomeSummary();
   updateFinancialSummary();
   updateMonthlySpendingChart();
