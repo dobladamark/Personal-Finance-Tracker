@@ -226,7 +226,7 @@ function openBudgetModal(categoryId = null) {
       </form>
     </div>
   `;
-
+        
   document.body.appendChild(modal);
 
   const form = document.getElementById("budget-form");

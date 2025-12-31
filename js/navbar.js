@@ -2,8 +2,8 @@ const Navbar = {
   template: `
     <header>
       <nav class="navbar">
-        <a href="#"><img src="LOGO_PATH/assets/logo.png" class="logo" alt="logo" /></a>
-        <a href="#" class="logo-text">FINANCE TRACKER</a>
+        <a href="PATH_PREFIX/index.html" data-page="dashboard"><img src="LOGO_PATH/assets/logo.png" class="logo" alt="logo" /></a>
+        <a href="PATH_PREFIX/index.html" data-page="dashboard" class="logo-text">FINANCE TRACKER</a>
         <ul class="nav-list">
           <li class="nav-item"><a href="PATH_PREFIX/index.html" data-page="dashboard">Dashboard</a></li>
           <li class="nav-item"><a href="PATH_PREFIX/pages/budget.html" data-page="budget">Budget</a></li>

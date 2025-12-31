@@ -1,3 +1,4 @@
+// INITIALIZE PAGE
 document.addEventListener("DOMContentLoaded", () => {
   console.log("📊 REPORTS PAGE LOADING...");
 
@@ -61,7 +62,7 @@ function setCurrentMonthYear() {
   const yearSelect = document.getElementById("year-select");
 
   if (monthSelect) {
-    monthSelect.value = now.getMonth() + 1;
+    monthSelect.value = now.getMonth() + 1; // Months are 0-indexed
   }
 
   if (yearSelect) {
@@ -394,6 +395,7 @@ function updateFinancialSummaryWithFiltered(transactions, month, year) {
   const totalExpenses = expenses.reduce((sum, t) => sum + t.amount, 0);
   const avgDaily = days > 0 ? totalExpenses / days : 0;
 
+  // Calculate category breakdown from filtered transactions
   const categoryTotals = {};
   expenses.forEach((exp) => {
     if (!categoryTotals[exp.category]) {
@@ -413,12 +415,39 @@ function updateFinancialSummaryWithFiltered(transactions, month, year) {
 
   const totalTransactions = transactions.length;
 
+  // Calculate budget performance for the selected period
+  const totalBudget = financeData.totalBudget;
+  const budgetPercentage =
+    totalBudget > 0 ? Math.round((totalExpenses / totalBudget) * 100) : 0;
+
+  let performance = "✓ Good";
+  let performanceFooter = "";
+
+  if (totalBudget === 0) {
+    performance = "📊 No Budget";
+    performanceFooter = "Set budgets to track";
+  } else if (budgetPercentage >= 100) {
+    performance = "⚠️ Over Budget";
+    performanceFooter = `${budgetPercentage}% of budget used`;
+  } else if (budgetPercentage >= 90) {
+    performance = "⚠️ Warning";
+    performanceFooter = `${budgetPercentage}% of budget used`;
+  } else if (budgetPercentage >= 75) {
+    performance = "→ Moderate";
+    performanceFooter = `${budgetPercentage}% of budget used`;
+  } else {
+    performance = "✓ Good";
+    performanceFooter = `${budgetPercentage}% of budget used`;
+  }
+
   const avgDailyEl = document.getElementById("avg-daily");
   const avgDailyFooter = document.getElementById("days-based");
   const highestCatEl = document.getElementById("highest-cat");
   const highestCatFooter = document.getElementById("highest-cat-footer");
   const totalTransEl = document.getElementById("total-trans");
   const transFooter = document.getElementById("trans-footer");
+  const performanceEl = document.getElementById("budget-perf");
+  const performanceFooterEl = document.getElementById("budget-perf-footer");
 
   if (avgDailyEl) avgDailyEl.textContent = Utils.formatCurrency(avgDaily);
   if (avgDailyFooter) avgDailyFooter.textContent = `Based on ${days} days`;
@@ -479,6 +508,10 @@ function updateFinancialSummaryWithFiltered(transactions, month, year) {
       transFooter.textContent = "All time";
     }
   }
+
+  // Update budget performance
+  if (performanceEl) performanceEl.textContent = performance;
+  if (performanceFooterEl) performanceFooterEl.textContent = performanceFooter;
 }
 
 function setupExportButton() {
@@ -506,6 +539,7 @@ function exportToCSV() {
   let filteredTransactions = [...transactions];
   let filename = "finance-report";
 
+  // Filter by month
   if (monthSelect && monthSelect.value) {
     const month = parseInt(monthSelect.value);
     const monthNames = [
@@ -530,6 +564,7 @@ function exportToCSV() {
     });
   }
 
+  // Filter by year
   if (yearSelect && yearSelect.value) {
     const year = parseInt(yearSelect.value);
     filename += `-${year}`;
@@ -539,6 +574,7 @@ function exportToCSV() {
     });
   }
 
+  // Filter by category
   if (categoryFilter && categoryFilter.value !== "Category: All") {
     const category = categoryFilter.value.toLowerCase();
     filename += `-${category}`;
