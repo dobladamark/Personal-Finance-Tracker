@@ -760,7 +760,7 @@ body {
   border-radius: 10px;
   padding: 8px 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  width: 17%;
+  width: 13%;
 }
 
 .filter-icon {
@@ -787,6 +787,10 @@ body {
   width: 11%;
 }
 
+.generate-btn:hover {
+  background: #3c59d1;
+}
+
 .export-btn {
   padding: 10px 20px;
   background: #0a9a33;
@@ -797,6 +801,10 @@ body {
   font-weight: 600;
   width: 12%;
   margin-left: auto;
+}
+
+.export-btn:hover {
+  background: #087227;
 }
 
 .chart-header {
@@ -1363,6 +1371,34 @@ body {
   margin-bottom: 15px;
 }
 
+.dash-card {
+  width: 100%;
+  padding: 20px;
+}
+
+/* RESPONSIVE STYLES */
+
+@media (min-width: 1024px) {
+}
+
+@media (max-width: 1920px) {
+}
+
+@media (max-width: 1680px) {
+}
+
+@media (max-width: 1440px) {
+}
+
+@media (max-width: 1366px) {
+.navbar {
+  display: none;
+}
+}
+
+@media (max-width: 1280px) {
+}
+
 @media (max-width: 1200px) {
   .income-content-grid {
     grid-template-columns: 1fr;
@@ -1373,9 +1409,35 @@ body {
   }
 }
 
-/*MEDIA QUERIES*/
+@media (max-width: 1160px) {
+}
 
-.dash-card {
-  width: 100%;
-  padding: 20px;
+@media (max-width: 1024px) {
+}
+
+@media (max-width: 840px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 680px) {
+}
+
+@media (max-width: 590px) {
+}
+
+@media (max-width: 475px) {
+}
+
+@media (max-width: 420px) {
+}
+
+@media (max-width: 390px) {
+}
+
+@media (max-width: 375px) {
+}
+
+@media (max-width: 320px) {
 }
