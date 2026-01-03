@@ -1391,12 +1391,13 @@ body {
 }
 
 @media (max-width: 1366px) {
-.navbar {
-  display: none;
-}
+
 }
 
 @media (max-width: 1280px) {
+  .navbar {
+  display: none;
+}
 }
 
 @media (max-width: 1200px) {
