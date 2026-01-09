@@ -184,7 +184,6 @@ financeData.reset(); // Clears all data (cannot be undone)
 ## 🙏 Acknowledgments
 
 - Chart.js for beautiful chart visualizations
-- Font Awesome for icons (if used)
 - Inspiration from popular finance apps like Mint, YNAB, and Wallet
 
 
