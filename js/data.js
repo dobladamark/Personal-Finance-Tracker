@@ -6,11 +6,50 @@ const FinanceDataStore = {
 
   // CATEGORIES DATA
   categories: {
-    food: { name: "Food & Dining", spent: 0, budget: 0, icon: "🍔" },
-    transport: { name: "Transport", spent: 0, budget: 0, icon: "🚗" },
-    shopping: { name: "Shopping", spent: 0, budget: 0, icon: "🛍️" },
-    utilities: { name: "Utilities", spent: 0, budget: 0, icon: "💡" },
-    others: { name: "Others", spent: 0, budget: 0, icon: "📦" },
+    food: {
+      name: "Food & Dining",
+      spent: 0,
+      budget: 0,
+      icon: "fa-utensils",
+      iconType: "fa-solid",
+    },
+    transport: {
+      name: "Transport",
+      spent: 0,
+      budget: 0,
+      icon: "fa-car",
+      iconType: "fa-solid",
+    },
+    shopping: {
+      name: "Shopping",
+      spent: 0,
+      budget: 0,
+      icon: "fa-bag-shopping",
+      iconType: "fa-solid",
+    },
+    utilities: {
+      name: "Utilities",
+      spent: 0,
+      budget: 0,
+      icon: "fa-lightbulb",
+      iconType: "fa-solid",
+    },
+    others: {
+      name: "Others",
+      spent: 0,
+      budget: 0,
+      icon: "fa-box",
+      iconType: "fa-solid",
+    },
+  },
+
+  incomeTypes: {
+    salary: { icon: "fa-briefcase", iconType: "fa-solid" },
+    freelance: { icon: "fa-laptop-code", iconType: "fa-solid" },
+    business: { icon: "fa-building", iconType: "fa-solid" },
+    investment: { icon: "fa-chart-line", iconType: "fa-solid" },
+    bonus: { icon: "fa-gift", iconType: "fa-solid" },
+    gift: { icon: "fa-heart", iconType: "fa-solid" },
   },
 
   // ALL TRANSACTIONS
@@ -69,7 +108,7 @@ const FinanceDataStore = {
     this.categories[category].budget = amount;
     this.totalBudget = Object.values(this.categories).reduce(
       (sum, cat) => sum + cat.budget,
-      0
+      0,
     );
 
     this.save();
@@ -164,7 +203,7 @@ const FinanceDataStore = {
       .forEach((t) => {
         const date = new Date(t.date);
         const monthKey = `${date.getFullYear()}-${String(
-          date.getMonth() + 1
+          date.getMonth() + 1,
         ).padStart(2, "0")}`;
         monthlyData[monthKey] = (monthlyData[monthKey] || 0) + t.amount;
       });
@@ -250,7 +289,7 @@ const FinanceDataStore = {
         exportedAt: new Date().toISOString(),
       },
       null,
-      2
+      2,
     );
 
     const blob = new Blob([dataStr], { type: "application/json" });
@@ -292,7 +331,6 @@ const FinanceDataStore = {
     return this;
   },
 
-  
   getThisMonthCategorySpending() {
     const now = new Date();
     const thisMonthTransactions = this.transactions.filter((t) => {

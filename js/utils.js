@@ -1,6 +1,24 @@
 // UTILITY FUNCTIONS REUSABLE HELPERSS
 
 const Utils = {
+  renderIcon(category, size = "default") {
+    const sizeClasses = {
+      small: "text-sm",
+      default: "text-base",
+      large: "text-xl",
+      xlarge: "text-2xl",
+    };
+
+    const categoryData =
+      financeData.categories[category] || financeData.incomeTypes?.[category];
+
+    if (!categoryData) {
+      return `<i class="fa-solid fa-circle-question ${sizeClasses[size]}"></i>`;
+    }
+
+    return `<i class="${categoryData.iconType} ${categoryData.icon} ${sizeClasses[size]}"></i>`;
+  },
+
   formatCurrency(amount) {
     return `₱${Math.abs(amount).toLocaleString("en-PH", {
       minimumFractionDigits: 2,
@@ -94,22 +112,16 @@ const Utils = {
   },
 
   getCategoryIcon(category) {
-    const icons = {
-      food: "🍔",
-      transport: "🚗",
-      shopping: "🛍️",
-      utilities: "💡",
-      others: "📦",
-      salary: "💼",
-      freelance: "💻",
-      business: "🏢",
-      investment: "📈",
-      rental: "🏠",
-      bonus: "🎁",
-      refund: "↩️",
-      gift: "🎉",
-    };
-    return icons[category] || "💰";
+    return this.renderIcon(category);
+  },
+
+  getIconClass(category) {
+    const categoryData =
+      financeData.categories[category] || financeData.incomeTypes?.[category];
+
+    if (!categoryData) return "fa-solid fa-circle-question";
+
+    return `${categoryData.iconType} ${categoryData.icon}`;
   },
 
   getCategoryLabel(category) {
@@ -213,7 +225,7 @@ const Utils = {
     return this.filterByDateRange(
       transactions,
       startOfLastMonth,
-      endOfLastMonth
+      endOfLastMonth,
     );
   },
 
