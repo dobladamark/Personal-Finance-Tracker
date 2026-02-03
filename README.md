@@ -144,6 +144,55 @@ financeData.reset(); // Clears all data (cannot be undone)
 | Edge    | ✅ 90+           |
 | Opera   | ✅ 76+           |
 
+## 🎨 Features Breakdown
+
+### Dashboard
+- Monthly income/expense overview
+- Balance calculation
+- Budget utilization percentage
+- 12-month spending trend chart
+- Category breakdown donut chart
+- Recent transactions (last 3)
+
+### Income Page
+- Quick add income form
+- Income sources: Salary, Freelance, Business, Investment, Bonus, Gift
+- Income breakdown by source
+- Filter by source and time period
+- Edit/delete existing entries
+- Average income calculation
+
+### Budget Page
+- Set monthly budgets per category
+- Real-time spending vs budget tracking
+- Color-coded progress bars:
+  - 🟢 Green (0-49%): On track
+  - 🔵 Blue (50-74%): Moderate
+  - 🟠 Orange (75-89%): Warning
+  - 🔴 Red (90%+): Over budget
+- Edit budgets anytime
+- Over-budget alerts
+
+### Expenses Page
+- Quick expense entry
+- Categories: Food, Transport, Shopping, Utilities, Others
+- Search expenses by description/category
+- Filter by category
+- Edit/delete expenses
+- Payment method tracking
+
+### Reports Page
+- Monthly spending bar chart (10 months)
+- Income vs Expenses comparison
+- Net savings calculation
+- Savings rate percentage
+- Financial summary cards:
+  - Average daily spending
+  - Highest spending category
+  - Total transactions count
+  - Budget performance
+- CSV export with filters
+- Generate custom reports
 
 ## 🔒 Privacy & Security
 
@@ -184,6 +233,7 @@ financeData.reset(); // Clears all data (cannot be undone)
 ## 🙏 Acknowledgments
 
 - Chart.js for beautiful chart visualizations
+- Font Awesome for icons (if used)
 - Inspiration from popular finance apps like Mint, YNAB, and Wallet
 
 
