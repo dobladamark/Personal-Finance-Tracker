@@ -1619,6 +1619,10 @@ body {
   .notification.show {
     transform: translateY(0);
   }
+
+  .add-expense-card {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1699,5 +1703,9 @@ body {
 
   .income-amount {
     font-size: 16px;
+  }
+
+  .add-expense-card {
+    width: 100%;
   }
 }
