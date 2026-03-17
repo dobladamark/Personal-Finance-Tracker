@@ -30,13 +30,9 @@ const Navbar = {
   `,
 
   render(currentPage = "", pathPrefix = "") {
-    const user = window.Auth ? Auth.getCurrentUser() : null;
-    const username = user ? user.username : "";
-
     let html = this.template
       .replace(/PATH_PREFIX\//g, pathPrefix)
-      .replace("LOGO_PATH/", pathPrefix)
-      .replace(/NAV_USERNAME/g, username);
+      .replace("LOGO_PATH/", pathPrefix);
 
     document.body.insertAdjacentHTML("afterbegin", html);
 
@@ -54,6 +50,29 @@ const Navbar = {
         link.classList.add("active");
         link.parentElement.classList.add("active");
       }
+    });
+  },
+
+  initHamburger() {
+    const hamburger = document.querySelector(".hamburger");
+    const mobileMenu = document.querySelector(".mobile-menu");
+
+    if (!hamburger || !mobileMenu) return;
+
+    hamburger.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("mobile-menu--open");
+      hamburger.classList.toggle("hamburger--open", isOpen);
+      hamburger.setAttribute("aria-expanded", isOpen);
+      mobileMenu.setAttribute("aria-hidden", !isOpen);
+    });
+
+    mobileMenu.querySelectorAll(".mobile-nav-list a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("mobile-menu--open");
+        hamburger.classList.remove("hamburger--open");
+        hamburger.setAttribute("aria-expanded", false);
+        mobileMenu.setAttribute("aria-hidden", true);
+      });
     });
   },
 };
