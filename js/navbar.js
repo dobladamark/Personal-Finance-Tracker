@@ -11,10 +11,6 @@ const Navbar = {
           <li class="nav-item"><a href="PATH_PREFIX/pages/expenses.html" data-page="expenses">Expenses</a></li>
           <li class="nav-item"><a href="PATH_PREFIX/pages/reports.html" data-page="reports">Reports</a></li>
         </ul>
-        <div class="nav-user">
-          <span class="nav-username">👤 NAV_USERNAME</span>
-          <button class="nav-logout-btn" id="nav-logout-btn">Logout</button>
-        </div>
         <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
           <span class="hamburger__bar"></span>
           <span class="hamburger__bar"></span>
@@ -29,10 +25,6 @@ const Navbar = {
           <li class="nav-item"><a href="PATH_PREFIX/pages/expenses.html" data-page="expenses">Expenses</a></li>
           <li class="nav-item"><a href="PATH_PREFIX/pages/reports.html" data-page="reports">Reports</a></li>
         </ul>
-        <div class="mobile-nav-user">
-          <span class="mobile-nav-username">👤 NAV_USERNAME</span>
-          <button class="mobile-nav-logout-btn" id="mobile-nav-logout-btn">Logout</button>
-        </div>
       </div>
     </header>
   `,
@@ -53,24 +45,6 @@ const Navbar = {
     }
 
     this.initHamburger();
-    this.initLogout(pathPrefix);
-  },
-
-  initLogout(pathPrefix = "") {
-    // pathPrefix is "" when on root (index.html) and "../" when inside pages/
-    // Both resolve to pages/login.html from their respective locations
-    const loginPath = pathPrefix + "pages/login.html";
-    const logoutHandler = () => {
-      if (window.Auth) Auth.logout();
-      window.location.replace(loginPath);
-    };
-
-    const logoutBtn = document.getElementById("nav-logout-btn");
-    if (logoutBtn) logoutBtn.addEventListener("click", logoutHandler);
-
-    const mobileLogoutBtn = document.getElementById("mobile-nav-logout-btn");
-    if (mobileLogoutBtn)
-      mobileLogoutBtn.addEventListener("click", logoutHandler);
   },
 
   setActivePage(pageName) {
@@ -80,29 +54,6 @@ const Navbar = {
         link.classList.add("active");
         link.parentElement.classList.add("active");
       }
-    });
-  },
-
-  initHamburger() {
-    const hamburger = document.querySelector(".hamburger");
-    const mobileMenu = document.querySelector(".mobile-menu");
-
-    if (!hamburger || !mobileMenu) return;
-
-    hamburger.addEventListener("click", () => {
-      const isOpen = mobileMenu.classList.toggle("mobile-menu--open");
-      hamburger.classList.toggle("hamburger--open", isOpen);
-      hamburger.setAttribute("aria-expanded", isOpen);
-      mobileMenu.setAttribute("aria-hidden", !isOpen);
-    });
-
-    mobileMenu.querySelectorAll(".mobile-nav-list a").forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.remove("mobile-menu--open");
-        hamburger.classList.remove("hamburger--open");
-        hamburger.setAttribute("aria-expanded", false);
-        mobileMenu.setAttribute("aria-hidden", true);
-      });
     });
   },
 };
